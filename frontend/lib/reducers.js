@@ -20,12 +20,12 @@ const flags = {
 };
 */
 
-function albums(state={}, action) {
-
+function voyage(state={}, action) {
+	return state;
 }
 
 let rootReducer = combineReducers({
-	albums,
+	voyage,
 });
 
 export default rootReducer;

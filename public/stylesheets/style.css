@@ -1,0 +1,210 @@
+* {
+  margin: 0;
+  padding: 0;
+  outline: none;
+  font-family: arial;
+  color: white; }
+
+#root {
+  width: 100%;
+  height: 500px;
+  padding-top: 1%; }
+
+.App {
+  background-color: #0080FF;
+  width: 40%;
+  height: 100%;
+  margin: 0 auto;
+  position: relative;
+  display: flex;
+  flex-direction: column; }
+  .App .Head {
+    height: 10%;
+    background: url(../images/logo.png) no-repeat;
+    background-size: 80px 100%;
+    background-position: left top;
+    position: relative;
+    margin-bottom: 20px; }
+    .App .Head .reference {
+      position: absolute;
+      top: 5px;
+      right: 10px; }
+  .App .Navigation nav ul {
+    list-style: none;
+    text-transform: uppercase;
+    font-size: 50%;
+    display: flex;
+    flex-direction: row; }
+    .App .Navigation nav ul li {
+      text-align: center;
+      flex-grow: 1;
+      padding-bottom: 5px; }
+      .App .Navigation nav ul li.active {
+        font-weight: bolder;
+        border-bottom: 2px solid white; }
+  .App .Route {
+    padding-top: 2%;
+    padding-right: 10%;
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: row;
+    position: relative; }
+    .App .Route .path {
+      flex-grow: 1;
+      display: flex;
+      flex-direction: row; }
+      .App .Route .path .image {
+        display: flex;
+        flex-direction: column;
+        width: auto;
+        height: 90%;
+        margin: 0 auto;
+        padding-top: 15%; }
+        .App .Route .path .image div {
+          border-left: 1px dashed white;
+          height: 80%;
+          margin: 0 auto; }
+        .App .Route .path .image div:first-child {
+          width: 5px;
+          height: 5px;
+          margin: 0;
+          border: 1px solid white;
+          border-radius: 100px; }
+        .App .Route .path .image div:last-child {
+          width: 5px;
+          height: 5px;
+          margin: 0;
+          border: 1px solid white;
+          border-radius: 100px;
+          justify-content: center;
+          align-items: center; }
+          .App .Route .path .image div:last-child p {
+            border-radius: 100px;
+            background-color: white;
+            width: 3px;
+            height: 3px;
+            margin-top: 1px;
+            margin-left: 1px; }
+    .App .Route .directions {
+      position: relative;
+      flex-grow: 4;
+      flex-direction: column; }
+      .App .Route .directions .direction {
+        height: 50%;
+        font-size: 70%;
+        font-weight: normal;
+        border-bottom: 1px solid white;
+        padding-bottom: 4px;
+        cursor: pointer; }
+        .App .Route .directions .direction:nth-child(2n) {
+          border: none;
+          padding-top: 10px;
+          padding-bottom: 0; }
+        .App .Route .directions .direction span {
+          font-size: 50%;
+          opacity: 0.8; }
+      .App .Route .directions .castling {
+        position: absolute;
+        right: 0;
+        top: 40%;
+        transform: rotate(45deg);
+        padding: 1px 4px;
+        background-color: #00008c;
+        border-radius: 3px;
+        cursor: pointer; }
+        .App .Route .directions .castling:hover span {
+          opacity: 0.8; }
+        .App .Route .directions .castling span {
+          display: inline-block;
+          transform: rotate(45deg); }
+  .App .RouteDetails {
+    border: 1px solid white;
+    border-left: none;
+    border-right: none;
+    padding: 5px 0; }
+    .App .RouteDetails .wrap {
+      display: flex;
+      flex-direction: row;
+      margin: 0 auto;
+      padding-left: 17%; }
+      .App .RouteDetails .wrap .date-block {
+        display: flex;
+        flex-direction: column;
+        align-self: center;
+        font-size: 80%; }
+        .App .RouteDetails .wrap .date-block span {
+          font-size: 60%;
+          margin-bottom: 5px; }
+      .App .RouteDetails .wrap .date-block:first-child {
+        margin-right: 20%; }
+      .App .RouteDetails .wrap .add {
+        padding: 10px 1%;
+        background-color: #00008c;
+        border: none;
+        border-radius: 2px;
+        cursor: pointer; }
+        .App .RouteDetails .wrap .add:active {
+          color: gray;
+          background-color: #0000bf; }
+  .App .Tickets {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: stretch;
+    padding-left: 17%; }
+    .App .Tickets .ticket-count {
+      display: flex;
+      flex-direction: column;
+      margin-right: 10%;
+      padding-top: 30px;
+      justify-content: flex-end;
+      position: relative; }
+      .App .Tickets .ticket-count .add, .App .Tickets .ticket-count .remove {
+        text-align: center;
+        padding: 4px 0;
+        cursor: pointer;
+        width: 100%; }
+      .App .Tickets .ticket-count .add {
+        position: absolute;
+        top: 0; }
+      .App .Tickets .ticket-count .wrap {
+        display: flex;
+        flex-direction: row;
+        align-items: flex-end; }
+        .App .Tickets .ticket-count .wrap p {
+          font-size: 70%; }
+        .App .Tickets .ticket-count .wrap img {
+          width: 20px;
+          height: 30px;
+          margin-left: 10px; }
+      .App .Tickets .ticket-count span {
+        font-size: 40%;
+        padding: 10px 0 5px 0;
+        text-align: center; }
+      .App .Tickets .ticket-count:nth-child(2) img {
+        width: 15px;
+        height: 20px; }
+      .App .Tickets .ticket-count:nth-child(3) img {
+        width: 10px;
+        height: 15px; }
+  .App .SearchTickets {
+    bottom: 0;
+    background-color: #00008c;
+    padding: 5px; }
+    .App .SearchTickets p {
+      text-align: center; }
+
+.reference {
+  border: 2px solid white;
+  border-radius: 100px;
+  width: 15px;
+  height: 15px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center; }
+  .reference span {
+    font-size: 75%;
+    transform: rotate(180deg); }
+
+/*# sourceMappingURL=style.css.map*/

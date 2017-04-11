@@ -1,1 +1,280 @@
-﻿
+$appBackground: #0080FF;
+$elemsBackground: rgb(0,0,140);
+$referenceColor: rgb(255,255,255);
+
+@mixin lineDirection() {
+	display: flex;
+	flex-direction: row;
+}
+
+@mixin columnDirection() {
+	display: flex;
+	flex-direction: column;
+}
+
+@mixin pointPath() {
+	width: 5px;
+	height: 5px;
+	margin: 0;
+	border: 1px solid $referenceColor;
+	border-radius: 100px;
+}
+
+* {
+	margin: 0;
+	padding: 0;
+	outline: none;
+	font-family: arial;
+	color: rgb(255,255,255);
+}
+
+#root {
+	width: 100%;
+	height: 500px;
+	padding-top: 1%;
+}
+.App {
+	background-color: $appBackground;
+	width: 40%;
+	height: 100%;
+	margin: 0 auto;
+	position: relative;
+	@include columnDirection();
+
+	.Head {
+		height: 10%;
+		background: url(../images/logo.png) no-repeat;
+		background-size: 80px 100%;
+		background-position: left top;
+		position: relative;
+		margin-bottom: 20px;
+		.reference {
+			position: absolute;
+			top: 5px;
+			right: 10px;
+		}
+	}
+
+	.Navigation {
+		nav {
+			ul {
+				list-style: none;
+				text-transform: uppercase;
+				font-size: 50%;
+				@include lineDirection();
+				li {
+					text-align: center;
+					flex-grow: 1;
+					padding-bottom: 5px;
+
+					&.active {
+						font-weight: bolder;
+						border-bottom: 2px solid $referenceColor;
+					}
+				}
+			}
+		}
+	}
+
+	.Route {
+		padding-top: 2%;
+		padding-right: 10%;
+		margin-bottom: 20px;
+		//height: 100px;
+		@include lineDirection();
+		//flex-grow: 1;
+		position: relative;
+		.path {
+			flex-grow: 1;
+			@include lineDirection();
+			.image {
+				@include columnDirection();
+				width: auto;
+				height: 90%;
+				margin: 0 auto;
+				padding-top: 15%;
+				div {
+					border-left: 1px dashed $referenceColor;
+					height: 80%;
+					margin: 0 auto;
+				}
+				div:first-child {
+					@include pointPath();
+				}
+				div:last-child {
+					@include pointPath();
+					justify-content: center;
+					align-items: center;
+					p {
+						border-radius: 100px;
+						background-color: $referenceColor;
+						width: 3px;
+						height: 3px;
+						margin-top: 1px;
+						margin-left: 1px;
+					}
+				}
+			}
+		}
+		.directions {
+			position: relative;
+			flex-grow: 4;
+			flex-direction: column;
+			.direction {
+				height: 50%;
+				font-size: 70%;
+				font-weight: normal;
+				border-bottom: 1px solid $referenceColor;
+				padding-bottom: 4px;
+				cursor: pointer;
+				&:nth-child(2n) {//last-child не поможет.
+					border: none;
+					padding-top: 10px;
+					padding-bottom: 0;
+				}
+				h5 {
+					
+				}
+				span {
+					font-size: 50%;
+					opacity: 0.8;
+				}
+
+
+			}
+			.castling {
+				position: absolute;
+				right: 0;
+				top: 40%;
+				transform: rotate(45deg);
+				padding: 1px 4px;
+				background-color: $elemsBackground;
+				border-radius: 3px;
+				cursor: pointer;
+				&:hover {
+					span{
+						opacity: 0.8;
+					}
+				}
+				span {
+					display: inline-block;
+					transform: rotate(45deg);
+				}
+			}
+		}
+	}
+	.RouteDetails {
+		border: 1px solid $referenceColor;
+		border-left: none;
+		border-right: none;
+		padding: 5px 0;
+		.wrap {
+			@include lineDirection();
+			margin: 0 auto;
+			padding-left: 17%;
+			.date-block {
+				@include columnDirection();
+				align-self: center;
+				font-size: 80%;
+				span {
+					font-size: 60%;
+					margin-bottom: 5px;
+				}
+			}
+			.date-block:first-child {
+				margin-right: 20%;
+			}
+
+			.add {
+				padding: 10px 1%;
+				background-color: $elemsBackground;
+				border: none;
+				border-radius: 2px;
+				cursor: pointer;
+				&:active {
+					color: darken($referenceColor, 50%);
+					background-color: lighten($elemsBackground, 10%);
+				}
+			}
+		}
+	}
+	.Tickets {
+		@include lineDirection();
+		justify-content: flex-start;
+		align-items: stretch;
+		padding-left: 17%;
+		.ticket-count {
+			@include columnDirection();
+			margin-right: 10%;
+			padding-top: 30px;
+			justify-content: flex-end;
+			position: relative;
+			.add, .remove {
+				text-align: center;
+				padding: 4px 0; //Для ловли нажатия
+				cursor: pointer;
+				width: 100%;
+			}
+			.add {
+				position: absolute;
+				top: 0;
+			}
+			.wrap {
+				@include lineDirection();
+				align-items: flex-end;
+				p {
+					font-size: 70%;
+				}
+				img {
+					width: 20px;
+					height: 30px;
+					margin-left: 10px;
+
+				}
+			}
+			span {
+				font-size: 40%;
+				padding: 10px 0 5px 0;
+				text-align: center;
+			}
+			&:nth-child(2) {
+				img {
+					width: 15px;
+					height: 20px;
+				}
+			}
+			&:nth-child(3) {
+				img {
+					width: 10px;
+					height: 15px;
+				}
+			}
+		}
+	}
+	.SearchTickets {
+		bottom: 0;
+		
+		background-color: $elemsBackground;
+		padding: 5px;
+		p {
+			text-align: center;
+		}
+	}
+}
+
+.reference {
+	border: 2px solid $referenceColor;
+	border-radius: 100px;
+	width: 15px;
+	height: 15px;
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+	span {
+		font-size: 75%;
+		transform: rotate(180deg);
+	}
+}
+
+//
