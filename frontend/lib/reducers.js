@@ -60,8 +60,11 @@ function voyage(state={}, action) {
 			break;
 
 		case flags.castling:
-			let newState = Object.assign({}, state);
-			[newState.from, newState.to]=[newState.to, newState.from];
+			let newFrom = Object.assign({}, state.from);
+			let newTo = Object.assign({}, state.to);
+			let newState=Object.assign({}, state, {from: newFrom, to: newTo});
+
+			[newState.from.name, newState.to.name]=[newState.to.name, newState.from.name];
 			return newState;
 			break;
 	}

@@ -11702,7 +11702,7 @@ var Calendar = function (_Component) {
 
     switch (props.direction) {
       case "from":
-        selectDate = props.selectMinDate || props.minDate;
+        selectDate = props.selectMinDate;
         break;
       case "to":
         selectDate = props.selectMaxDate || props.selectMinDate;
@@ -11711,7 +11711,7 @@ var Calendar = function (_Component) {
 
     _this.state = {
       //Должно быть так: selectDate: this.props.selectDate,
-      selectDate: props.selectDate || props.minDate
+      selectDate: selectDate
     };
     return _this;
   }
@@ -11726,7 +11726,20 @@ var Calendar = function (_Component) {
   }, {
     key: "handlerOk",
     value: function handlerOk() {
-      this.props.setDate(this.props.direction, this.state.selectDate);
+
+      var direction = this.props.direction;
+      var date = this.state.selectDate;
+
+      this.props.setDate(direction, date);
+
+      if (direction == "from") {
+        // Если меянется отправная точка
+        if (this.props.selectMaxDate && date > this.props.selectMaxDate) {
+          /*При этом выбранная дата != null и отправная больше конечной,
+          то снова выбирать дату*/
+          this.props.setDate("to", null);
+        }
+      } //
     }
   }, {
     key: "handlerCancel",
@@ -11749,8 +11762,13 @@ var Calendar = function (_Component) {
       var maxYear = maxDate.getFullYear();
       var minMonth = minDate.getMonth();
       var maxMonth = maxDate.getMonth();
-      //ДОДЕЛАТЬ КАЛЕНДАРЬ И БЛОКИРОВКУ ВЫБООРА ДАТ
-      var currentDate = new Date(props.minDate);
+
+      var currentDate = new Date(minDate); //Чтобы не менять то что в state
+      /*
+        На основе минимальной, но будет менятсяь в процессе
+      */
+      currentDate.setDate(1);
+
       var selectDate = this.state.selectDate;
       var sYear = selectDate.getFullYear();
       var sMonth = selectDate.getMonth();
@@ -11758,7 +11776,6 @@ var Calendar = function (_Component) {
       var sDay = selectDate.getDay() || 7;
 
       var monthsList = [];
-      currentDate.setDate(1);
 
       while (currentDate < maxDate) {
 
@@ -11770,8 +11787,11 @@ var Calendar = function (_Component) {
         countDays = dateOpt.daysInMonth;
 
         isSelect = (0, _dist.isCoincid)(sYear, year, sMonth, monthNumber); //Вычисляю сходятся ли даты
-        isMinMonth = (0, _dist.isCoincid)(minYear, year, minMonth, monthNumber);
         isMaxMonth = (0, _dist.isCoincid)(maxYear, year, maxMonth, monthNumber);
+        isMinMonth = (0, _dist.isCoincid)(minYear, year, minMonth, monthNumber);
+
+        isMinMonth;
+        isMaxMonth;
 
         monthsList.push(_react2.default.createElement(Month, {
           handlerDate: this.handlerDate,
@@ -11898,10 +11918,9 @@ var Month = function (_Component2) {
         week.push(_react2.default.createElement("td", { key: _i + 0.5 }));
       }
 
-      /*if(firstDay!=1) {
-        firstDay = firstDay || 7;//Если 0
-        
-      }*/
+      if (firstDay != 1) {
+        firstDay = firstDay || 7; //Если 0
+      }
       var minDay = props.minDay;
       var maxDay = props.maxDay;
 
@@ -13296,10 +13315,13 @@ function voyage() {
 			break;
 
 		case _flags2.default.castling:
-			var newState = (0, _assign2.default)({}, state);
-			var _ref = [newState.to, newState.from];
-			newState.from = _ref[0];
-			newState.to = _ref[1];
+			var newFrom = (0, _assign2.default)({}, state.from);
+			var newTo = (0, _assign2.default)({}, state.to);
+			var newState = (0, _assign2.default)({}, state, { from: newFrom, to: newTo });
+
+			var _ref = [newState.to.name, newState.from.name];
+			newState.from.name = _ref[0];
+			newState.to.name = _ref[1];
 
 			return newState;
 			break;

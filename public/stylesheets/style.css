@@ -12,12 +12,26 @@
 
 .App {
   background-color: #0080FF;
-  width: 50%;
-  height: 100%;
+  width: 25%;
   margin: 0 auto;
   position: relative;
   display: flex;
   flex-direction: column; }
+  @media screen and (max-width: 1600px) {
+    .App {
+      width: 30%; } }
+  @media screen and (max-width: 1200px) {
+    .App {
+      width: 35%; } }
+  @media screen and (max-width: 800px) {
+    .App {
+      width: 50%; } }
+  @media screen and (max-width: 640px) {
+    .App {
+      width: 70%; } }
+  @media screen and (max-width: 400px) {
+    .App {
+      width: 100%; } }
   .App .Head {
     height: 10%;
     background: url(../images/logo.png) no-repeat;
@@ -143,7 +157,8 @@
         background-color: #00008c;
         border: none;
         border-radius: 2px;
-        cursor: pointer; }
+        cursor: pointer;
+        margin-right: 10px; }
         .App .RouteDetails .wrap .add:active {
           color: gray;
           background-color: #0000bf; }

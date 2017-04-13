@@ -16,16 +16,16 @@ export default class Calendar extends Component {
     
     switch(props.direction) {
       case "from":
-        selectDate=props.selectMinDate || props.minDate;
+        selectDate=props.selectMinDate;
         break;
       case "to":
         selectDate=props.selectMaxDate || props.selectMinDate;
         break;
     }
-      
+
     this.state = {
       //Должно быть так: selectDate: this.props.selectDate,
-      selectDate: (props.selectDate || props.minDate),
+      selectDate: selectDate,
     }
   }
 
@@ -36,7 +36,19 @@ export default class Calendar extends Component {
   }
 
   handlerOk() {
-    this.props.setDate(this.props.direction, this.state.selectDate);
+    
+    let direction = this.props.direction;
+    let date = this.state.selectDate;
+
+    this.props.setDate(direction, date);
+
+    if(direction == "from") {// Если меянется отправная точка
+      if (this.props.selectMaxDate && date>this.props.selectMaxDate) {
+        /*При этом выбранная дата != null и отправная больше конечной,
+        то снова выбирать дату*/
+        this.props.setDate("to", null);
+      }
+    }//
   }
 
   handlerCancel() {
@@ -49,7 +61,7 @@ export default class Calendar extends Component {
     var year, monthNumber, firstDay, countDays,
     isSelect, isMinMonth, isMaxMonth, dateOpt;
     
-    let minDate = (props.direction=="from") ? props.minDate : props.selectMinDate;
+    let minDate = (props.direction =="from") ? props.minDate : props.selectMinDate;
     let maxDate = props.maxDate;
     let minDay = minDate.getDate();
     let maxDay = maxDate.getDate();
@@ -57,8 +69,13 @@ export default class Calendar extends Component {
     let maxYear = maxDate.getFullYear();
     let minMonth = minDate.getMonth();
     let maxMonth = maxDate.getMonth();
-//ДОДЕЛАТЬ КАЛЕНДАРЬ И БЛОКИРОВКУ ВЫБООРА ДАТ
-    let currentDate = new Date(props.minDate);
+
+    let currentDate = new Date(minDate);//Чтобы не менять то что в state
+    /*
+      На основе минимальной, но будет менятсяь в процессе
+    */
+    currentDate.setDate(1);
+
     let selectDate = this.state.selectDate;
     let sYear = selectDate.getFullYear();
     let sMonth = selectDate.getMonth();
@@ -66,7 +83,7 @@ export default class Calendar extends Component {
     let sDay = selectDate.getDay() || 7;
 
     let monthsList = [];
-    currentDate.setDate(1);
+    
 
     while(currentDate<maxDate) {
 
@@ -78,8 +95,12 @@ export default class Calendar extends Component {
       countDays = dateOpt.daysInMonth;
 
       isSelect = isCoincid(sYear, year, sMonth, monthNumber);//Вычисляю сходятся ли даты
-      isMinMonth = isCoincid(minYear, year, minMonth, monthNumber);
       isMaxMonth = isCoincid(maxYear, year, maxMonth, monthNumber);
+      isMinMonth = isCoincid(minYear, year, minMonth, monthNumber);
+      
+
+      isMinMonth
+      isMaxMonth
 
       monthsList.push(
         <Month
@@ -152,10 +173,10 @@ class Month extends Component {
       week.push(<td key={i+0.5}></td>);
     }    
 
-    /*if(firstDay!=1) {
+    if(firstDay!=1) {
       firstDay = firstDay || 7;//Если 0
       
-    }*/
+    }
     let minDay = props.minDay;
     let maxDay = props.maxDay;
 
