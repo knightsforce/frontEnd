@@ -1,6 +1,10 @@
 $appBackground: #0080FF;
 $elemsBackground: rgb(0,0,140);
+$loadingBackground: rgb(50,200,255);
 $referenceColor: rgb(255,255,255);
+
+$color0: rgb(64,64,64);
+$color1: rgb(220,220,220);
 
 @mixin lineDirection() {
 	display: flex;
@@ -20,6 +24,13 @@ $referenceColor: rgb(255,255,255);
 	border-radius: 100px;
 }
 
+@mixin shield($top, $left) {
+	position: absolute;
+	top: $top;
+	left: $left;
+}
+
+
 * {
 	margin: 0;
 	padding: 0;
@@ -35,7 +46,7 @@ $referenceColor: rgb(255,255,255);
 }
 .App {
 	background-color: $appBackground;
-	width: 40%;
+	width: 50%;
 	height: 100%;
 	margin: 0 auto;
 	position: relative;
@@ -176,6 +187,7 @@ $referenceColor: rgb(255,255,255);
 				@include columnDirection();
 				align-self: center;
 				font-size: 80%;
+				cursor: pointer;
 				span {
 					font-size: 60%;
 					margin-bottom: 5px;
@@ -216,8 +228,7 @@ $referenceColor: rgb(255,255,255);
 				width: 100%;
 			}
 			.add {
-				position: absolute;
-				top: 0;
+				@include shield(0, 0);
 			}
 			.wrap {
 				@include lineDirection();
@@ -258,6 +269,169 @@ $referenceColor: rgb(255,255,255);
 		padding: 5px;
 		p {
 			text-align: center;
+		}
+	}
+	.Loading {
+		@include shield(0, 0);
+		width: 100%;
+		height: 100%;
+		background-color: $loadingBackground;
+		.sidebar {
+			@include shield(45%, 45%);
+			width: 50px;
+			height: 50px;
+			background: url(../images/icons/reload.png) no-repeat;
+			background-size: 100% 100%;
+			background-position: 0% 0%;
+
+			@keyframes rotate-load {
+				from {transform: rotate(0deg)}
+				to {transform: rotate(360deg)}
+			}
+			animation: rotate-load 1s infinite linear;
+		}
+	}
+
+	.ListCities {
+		@include shield(0, 0);
+		width: 90%;
+		height: 90%;
+		overflow: hidden;
+		background-color: $appBackground;
+		padding: 5% 5% 5% 5%;
+		.wrap-content {
+			@include lineDirection();
+
+			.wrap-image {	
+				padding-top: 10px;	
+				margin-right: 20px;
+				.image {
+					@include pointPath();
+					justify-content: center;
+					align-items: center;
+					p {
+						border-radius: 100px;
+						background-color: $referenceColor;
+						width: 3px;
+						height: 3px;
+						margin-top: 1px;
+						margin-left: 1px;
+					}
+				}
+			}
+			.wrap-list {
+				//flex-grow: 3;
+				width: 70%;
+				@include columnDirection();
+				.search-input {
+					//width: 80%;
+					padding-bottom: 1px;
+					input {
+						//width: 95%;
+						background-color: $appBackground;
+						border: none;
+						color: white;
+					}
+					margin-bottom: 10px;
+				}
+				.text {
+					font-size: 40%;
+					border-bottom: 1px solid $referenceColor;
+					padding-bottom: 5px;
+					margin-bottom: 10px;
+				}
+				ul {
+					list-style: none;
+					height: 400px;
+					
+					overflow: auto;
+					li {
+						padding: 5px 5px;
+						margin-bottom: 10px;
+						cursor: pointer;
+					}
+				}
+			}
+		}
+	}
+	.Calendar {
+		@include shield(20%, 30%);
+		height: 65%;
+		overflow-y: hidden;
+		background-color: $referenceColor;
+		box-shadow: 0 0 5px 0 rgb(0,0,0);
+		.wrap-content {
+			width: 100%;
+			height: 100%;
+			.head {
+				padding: 5px;
+				text-transform: lowercase;
+				background-color: $appBackground; 
+				p:first-child {
+					font-size: 50%;
+				}
+			}
+			.month-list {
+				background-color: $referenceColor;
+				height: 70%;
+				overflow-x: hidden;
+				overflow-y: auto;
+				padding: 0 5%;
+				margin-bottom: 10px;
+				padding-top: 10px;
+				font-size: 50%;
+				.month {
+					margin-bottom: 10px;
+
+					table {
+						caption {
+							margin-bottom: 10px;
+							color: rgb(0,0,0);
+							font-weight: bolder;
+						}
+						thead {
+							th {
+								color: lighten($color0, 20%);
+							}
+						}
+						
+						td {
+							color: rgb(0,0,0);
+							padding: 5px;
+							text-align: right;
+							cursor: pointer;
+							&.select {
+								background-color: $appBackground;
+								color: $referenceColor;
+								border-radius: 100px;
+								cursor: default;
+							}
+							&.non-active {
+								color: $color1;
+								cursor: default;
+							}
+						}
+					}
+
+				}
+			}
+			.button-container {
+				@include lineDirection();
+				justify-content: flex-end;
+				margin: 20px 0;
+				margin-right: 5%;
+				button {
+					text-transform: uppercase;
+					padding: 1%;
+					border: none;
+					background-color: $referenceColor;
+					color: $appBackground;
+					cursor: pointer;
+					&:first-child {
+						margin-right: 5%;
+					}
+				}
+			}
 		}
 	}
 }

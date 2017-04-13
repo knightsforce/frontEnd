@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import flags from "../lib/flags";
 
+let defaultFrom = "Туда";
+let defaultTo = "Оттуда";
+
 export default class Route extends Component {
 	constructor(props) {
 		super(props);
@@ -12,10 +15,19 @@ export default class Route extends Component {
 	    return (
 	      <div className="Route">
 	    	<Path />
-	    	<Directions directions={directions}>
-	    		<Castling />
-	    	</Directions>
-
+	    	<div className="directions">
+		    	<Directions
+		    		direct="from"
+		    		name={directions.from.name || defaultFrom}
+		    		queryCities={props.queryCities}
+		    	/>
+		    	<Directions
+		    		direct="to"
+		    		name={directions.to.name || defaultTo}
+		    		queryCities={props.queryCities}
+		    	/>
+	    		<Castling castling={props.castling}/>
+	    	</div>
 	      </div>
 	    );
 	}
@@ -39,38 +51,26 @@ class Path extends Component {
 	    );
 	}
 }
-
+//
 class Directions extends Component {
 	constructor(props) {
 		super(props);
 		this.props = props;
-		this.clickFrom = this.clickFrom.bind(this);
-		this.clickTo = this.clickTo.bind(this);
+		this.handleClick = this.handleClick.bind(this);
 	}
 	
-	clickFrom() {
-
-	}
-	clickTo() {
-		
+	handleClick() {
+		this.props.queryCities(this.props.direct);
 	}
 
 	render() {
 		let props = this.props;
-		let directions = props.directions;
 
 	    return (
-	    	<div className="directions">
-		    	<div className="direction" onClick={this.clickFrom}>
-		    		<h5>{directions.from.name}</h5>
-		    		<span>Все аэропорты</span>
-		    	</div>
-		    	<div className="direction" onClick={this.clickTo}>
-		    		<h5>{directions.to.name}</h5>
-		    		<span>Все аэропорты</span>
-		    	</div>
-		    	{props.children}
-	    	</div>
+		    <div className="direction">
+		    	<h5 onClick={this.handleClick}>{props.name}</h5>
+		    	<span>Все аэропорты</span>
+		    </div>
 	    );
 	}
 }
@@ -80,11 +80,25 @@ class Castling extends Component {
 	constructor(props) {
 		super(props);
 		this.props = props;
+		this.handleClick = this.handleClick.bind(this);
+		//this.handleMouseDown = this.handleMouseDown.bind(this);
 	}
+
+	handleClick() {
+		this.props.castling();
+	}
+
+	/*handleMouseDown() {
+		e.preventDefault();//отменяю выделение текста
+	}*/
+
 	render() {
 		let props = this.props;
 	    return (
-	    	<div className="castling">
+	    	<div
+	    		className="castling"
+	    		onClick={this.handleClick}
+	    	>
 	    		<span>&#8646;</span>
 	    	</div>
 	    );

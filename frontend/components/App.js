@@ -3,8 +3,8 @@ import { createStore, applyMiddleware } from 'redux';
 import { connect } from 'react-redux';
 import rootReducer from '../lib/reducers';
 import * as actions from '../lib/actions';
-import flags from "../lib/flags";
-import {formatDate} from "../lib/dist";
+import flags, {statuses} from "../lib/flags";
+import {formatDate, date} from "../lib/dist";
 import thunk from 'redux-thunk';
 
 import Head from "./Head";
@@ -13,50 +13,40 @@ import Route from "./Route";
 import RouteDetails from "./RouteDetails";
 import Tickets from "./Tickets";
 import SearchTickets from "./SearchTickets";
+import ListCities from "./ListCities";
+import Loading from "./Loading";
+import Calendar from "./Calendar";
 
-let initState = {
+var dateMin = new Date();
+var dateMax = new Date(dateMin.getFullYear()+1, dateMin.getMonth(), dateMin.getDate());
+
+var initState = {
 	voyage: {
 		status: "empty",
-		settings: {
-			from: {
-				name: "Откуда",
-				date: formatDate(),//Туда - new Date()
-				countTickets: {
-					adult: 1,
-					kind: 0,
-					baby: 0,
-				}
-			},
-			to: {
-				name: "Куда",
-				date: null,//Кнопка
-				countTickets: {
-					adult: 1,
-					kind: 0,
-					baby: 0,
-				}
-			},
-/*			tickets: {
-				baby: {},
-				Children: {},
-				adult: {},
-			}*/
+		cities: null,
+		direction: null,
+		from: {
+			name: null,
+			date: dateMin,
+			
+		},
+		to: {
+			name: null,
+			date: null,
+		},
+		minDate: dateMin,
+		maxDate: dateMax,
+		//На деле дата должна приходить с сервера, а не определястя у пользователя
+		/*fromDate: formatDate(dateMin),//Хранить как есть, парсить в другом месте
+		toDate: null,*/
+
+		tickets: {
+			adult: 1,
+			kind: 0,
+			baby: 0,
 		}
 	},
 }
-/*
-Структура state:
-
-albums: {
-	status: "empty",
-	list: {
-		id: id,
-		title: title:
-		artist: artist
-	},
-},
-*/
-
 
 const store = createStore(rootReducer, initState, applyMiddleware(thunk));
 
@@ -68,28 +58,65 @@ class App extends Component {
 	render() {
 		let props = this.props;
 		let store = props.storeVoyage;
-		let settings = store.settings;
+
 		let directions={
-			from: settings.from,
-			to: settings.to
+			from: store.from,
+			to: store.to,
 		};
-		let counts = {
-			from: settings.from.countTickets,
-			to: settings.to.countTickets
+		
+		let tickets = store.tickets;
+		let elems = [];
+
+		switch(store.status) {
+			case statuses.load:
+				elems.push(
+					<Loading />
+				);
+				break;
+			case statuses.succ:
+				elems.push(
+					<ListCities
+						direction = {store.direction}
+						data = {store.cities}
+						setCity = {props.setCity}
+					/>
+				);
+				break;
+			case statuses.gC:
+				elems.push(
+					<Calendar
+						minDate={store.minDate}
+						maxDate={store.maxDate}
+						selectMinDate={store.from.date}
+						selectMaxDate={store.to.date}
+						direction = {store.direction}
+						hideCalendar={props.hideCalendar}
+						setDate={props.setDate}
+					/>
+				);
+				break;
 		}
+
     	return (
     		<div className="App">
     		<Head />
     		<Navigation />
-			<Route directions={directions}/>
-			<RouteDetails directions={directions}/>
-			<Tickets counts={counts} />
+			<Route
+				directions={directions}
+				queryCities={props.queryCities}
+				castling={props.castling}
+			/>
+			<RouteDetails
+				directions={directions}
+				getCalendar={props.getCalendar}
+			/>
+			<Tickets tickets={tickets} />
 			<SearchTickets />
+			{elems}
       	</div>
     	);
   }
 }
-
 
 
 function mapStateToProps(state) {
@@ -98,7 +125,27 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
 	return {
-		
+
+		queryCities: (direct)=>{
+			dispatch(actions.queryCities(direct));
+		},
+
+		setCity: (direct, city)=> {
+			dispatch(actions.setCityAction(direct, city));
+		},
+
+		castling: ()=>{
+			dispatch(actions.castlingAction());
+		},
+		getCalendar: (direction)=>{
+			dispatch(actions.getCalendarAction(direction));
+		},
+		hideCalendar: ()=>{
+			dispatch(actions.hideCalendarAction());
+		},
+		setDate: (direct, date)=>{
+			dispatch(actions.setDateAction(direct, date));
+		},
 	};
 }
 

@@ -1,23 +1,59 @@
 import React, { Component } from 'react';
 import flags from "../lib/flags";
+import {formatDate} from "../lib/dist";
 
 export default class RouteDetails extends Component {
 	constructor(props) {
 		super(props);
 		this.props = props;
+		this.handleCalendar=this.handleCalendar.bind(this);
+		//alert(props.directions.to.date)
 		this.state = {
 			buttonVisible: !props.directions.to.date,
 		};
 	}
+
+	componentWillReceiveProps(nextProps) {
+		this.state = {
+			buttonVisible: !nextProps.directions.to.date,
+		};
+	}
+
+	handleCalendar(direct) {
+		this.props.getCalendar(direct);
+	}
+
 	render() {
 		let props = this.props;
+
 		let directions = props.directions;
-		let elems = [dateBlock({text: "Туда", date: directions.from.date})];
+		let elems = [
+			<DateBlock
+				text="Туда"
+				date={formatDate(directions.from.date)}
+				direct="from"
+				handleCalendar={this.handleCalendar}
+			/>
+		];
 	    
 	    if(this.state.buttonVisible) {
-	    	elems.push(<button type="button" className="add">+ Обратно</button>);
+	    	
+	    	elems.push(
+	    		<ButtonElem direct="to" handleCalendar={this.handleCalendar}/>
+	    		//bittonElem({direct: "to", handleCalendar: this.handleCalendar})
+	    	);
+
 	    } else {
-	    	elems.push(dateBlock({text: "Обратно", date: directions.to.date}));
+
+	    	elems.push(
+	    		<DateBlock
+					text="Обратно"
+					date={formatDate(directions.to.date)}
+					direct="to"
+					handleCalendar={this.handleCalendar}
+				/>
+	    	);
+	    	
 	    }
 
 	    return (
@@ -30,11 +66,31 @@ export default class RouteDetails extends Component {
 	}
 }
 
-function dateBlock(props) {
+function DateBlock(props) {
+	//let direction=props.direct;
+	let handleClick = ()=>{
+		props.handleCalendar(props.direct)
+	}
 	return(
-		<div className="date-block">
+		<div className="date-block" onClick={handleClick}>
 			<span>{props.text}</span>
 			<p>{props.date}</p>
 		</div>
+	);
+}
+
+function ButtonElem(props) {
+	//let direction=props.direct;
+	let handleClick = ()=>{
+		props.handleCalendar(props.direct)
+	}
+	return(
+		<button
+	    	type="button"
+	    	className="add"
+	    	onClick={handleClick}
+	    >
+	    	+ Обратно
+	    </button>
 	);
 }

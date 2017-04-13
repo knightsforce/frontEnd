@@ -10,12 +10,12 @@ export default class Tickets extends Component {
 	}
 	render() {
 		let props = this.props;
-		let counts = props.counts; 
+		let tickets = props.tickets; 
 	    return (
 	      <div className="Tickets">
-	    	<TicketCount count={counts.from.adult} text="Взрослый"/>
-	    	<TicketCount count={counts.from.kind} text="От 2-12"/>
-	    	<TicketCount count={counts.from.baby} text="От 0-2"/>
+	    	<TicketCount count={tickets.adult} text="Взрослый"/>
+	    	<TicketCount count={tickets.kind} text="От 2-12"/>
+	    	<TicketCount count={tickets.baby} text="От 0-2"/>
 	      </div>
 	    );
 	}
