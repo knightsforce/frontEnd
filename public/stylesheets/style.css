@@ -289,9 +289,9 @@
             cursor: pointer; }
   .App .Calendar {
     position: absolute;
-    top: 20%;
+    top: 5%;
     left: 30%;
-    height: 65%;
+    height: 270px;
     overflow-y: hidden;
     background-color: white;
     box-shadow: 0 0 5px 0 black; }
@@ -338,7 +338,7 @@
         display: flex;
         flex-direction: row;
         justify-content: flex-end;
-        margin: 20px 0;
+        margin: 10px 0;
         margin-right: 5%; }
         .App .Calendar .wrap-content .button-container button {
           text-transform: uppercase;
@@ -349,6 +349,132 @@
           cursor: pointer; }
           .App .Calendar .wrap-content .button-container button:first-child {
             margin-right: 5%; }
+  .App .Flights {
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: white;
+    width: 100%;
+    height: 100%;
+    box-shadow: 0 0 5px 0 black;
+    overflow-y: hidden; }
+    .App .Flights .wrap-content {
+      position: relative; }
+      .App .Flights .wrap-content .head {
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-start;
+        align-items: center;
+        padding-top: 10px;
+        padding-left: 10px;
+        margin-bottom: 20px; }
+        .App .Flights .wrap-content .head .back {
+          width: 15px;
+          height: 15px;
+          transform: rotate(45deg);
+          color: #0080FF;
+          border: 3px solid #0080FF;
+          border-top: none;
+          border-right: none;
+          cursor: pointer; }
+        .App .Flights .wrap-content .head .text {
+          display: flex;
+          flex-direction: row;
+          width: 100%;
+          justify-content: center;
+          align-items: center; }
+          .App .Flights .wrap-content .head .text .image {
+            width: 20px;
+            height: 20px;
+            background: url(../images/aircraftBlueRight.png);
+            background-size: 100% 100%; }
+          .App .Flights .wrap-content .head .text p {
+            color: #0080FF;
+            padding: 0 10px;
+            font-weight: bolder; }
+      .App .Flights .wrap-content .prompt {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        background-color: rgba(211, 217, 232, 0.5);
+        padding: 10px 0;
+        margin-bottom: 10px;
+        color: #404040; }
+      .App .Flights .wrap-content .directions {
+        display: flex;
+        flex-direction: row;
+        margin-bottom: 10px;
+        /* .from {
+					border: 2px solid rgba(0, 0, 0, 0.5);
+					
+				}
+				.to {
+
+				} */ }
+        .App .Flights .wrap-content .directions div {
+          display: flex;
+          flex-direction: row;
+          justify-content: center;
+          align-items: center;
+          width: 50%;
+          height: 40px; }
+          .App .Flights .wrap-content .directions div span {
+            margin: 0 10px; }
+          .App .Flights .wrap-content .directions div:first-child {
+            border-right: 2px solid rgba(0, 0, 0, 0.2); }
+            .App .Flights .wrap-content .directions div:first-child .image {
+              background: url(../images/aircraftSmallGrey.png);
+              background-repeat: no-repeat;
+              width: 15px;
+              height: 15px;
+              background-size: 100% 100%;
+              border: none;
+              margin-left: 10px; }
+            .App .Flights .wrap-content .directions div:first-child span {
+              color: rgba(102, 102, 102, 0.5); }
+          .App .Flights .wrap-content .directions div:last-child .image {
+            background: url(../images/aircraftSmallGrey.png);
+            transform: rotate(180deg);
+            background-repeat: no-repeat;
+            width: 15px;
+            height: 15px;
+            background-size: 100% 100%;
+            border: none;
+            margin-left: 10px; }
+          .App .Flights .wrap-content .directions div:last-child span {
+            color: rgba(102, 102, 102, 0.5); }
+          .App .Flights .wrap-content .directions div.active .image {
+            background-image: url(../images/aircraftSmallBlue.png); }
+          .App .Flights .wrap-content .directions div.active span {
+            color: #0080FF; }
+      .App .Flights .wrap-content .weather-block {
+        padding: 10px;
+        height: 140px;
+        overflow-y: auto; }
+        .App .Flights .wrap-content .weather-block .day {
+          border-bottom: 2px solid #404040;
+          padding-bottom: 5px;
+          margin-bottom: 10px; }
+          .App .Flights .wrap-content .weather-block .day > p {
+            text-align: center;
+            color: #404040; }
+          .App .Flights .wrap-content .weather-block .day ul.hours {
+            margin-bottom: 20px;
+            list-style: none; }
+            .App .Flights .wrap-content .weather-block .day ul.hours > p {
+              color: rgba(0, 0, 0, 0.5);
+              text-align: left;
+              margin-bottom: 5px; }
+            .App .Flights .wrap-content .weather-block .day ul.hours li {
+              margin: 0 0 5px 25px; }
+              .App .Flights .wrap-content .weather-block .day ul.hours li span {
+                color: #404040; }
+              .App .Flights .wrap-content .weather-block .day ul.hours li span:first-child {
+                color: #0080FF;
+                font-weight: bolder; }
+          .App .Flights .wrap-content .weather-block .day:last-child {
+            border: none; }
 
 .reference {
   border: 2px solid white;

@@ -1,5 +1,5 @@
 import flags, {statuses} from "./flags";
-import {createURL} from "./dist"
+import {citiesURL, weatherURL} from "./dist"
 
 function queryCities(direction) {
 
@@ -7,7 +7,7 @@ function queryCities(direction) {
 		
 		dispatch(changeDirection(direction));
 
-		$.ajax(createURL(), {
+		$.ajax(citiesURL(), {
 			crossDomain: true,
 			beforeSend: ()=>{
 				dispatch(citiesLoadAction(flags.citiesLoad));
@@ -146,3 +146,105 @@ function castlingAction() {
 }
 
 export {castlingAction};
+
+function setTicketAction(age, value) {
+
+	return {
+		type: flags.setTicket,
+		payload: {
+			age: age,
+			value: value,
+		},
+	}
+}
+
+export {setTicketAction};
+
+
+
+
+
+
+
+
+
+
+function getWeatherAction(city1, city2) {
+	return (dispatch) => {
+		//Добавить direct
+		new Promise((res, rej)=>{
+			
+			dispatch(flightsLoadAction(flags.flightsLoad));
+			$.ajax(weatherURL(city1), {
+				crossDomain: true,
+				dataType: "jsonp",
+				cache: false,
+				success: (data)=>{
+					//Просто добавляю данные
+					dispatch(flightsSuccAction(flags.flightsSucc, direct, data));
+					res();
+				},
+				error: ()=>{
+					rej();
+				},
+			});
+		})
+		.then(()=>{
+			$.ajax(weatherURL(city2), {
+				crossDomain: true,
+				dataType: "jsonp",
+				cache: false,
+				success: (data)=>{
+					//Просто добавляю данные
+					dispatch(flightsSuccAction(flags.flightsSucc, direct, data));
+					res();
+				},
+				error: ()=>{
+					rej();
+				},
+			});
+		})
+		.then(()=>{
+
+		})
+		.catch(()=>{
+			dispatch(flightsErrorAction(flags.flightsErr));
+			//Стереть погоду из from и to
+		});
+		$.ajax(createURL(), {
+			
+			
+			
+		});
+	}
+}
+
+export {getWeatherAction};
+
+function weatherLoadAction(flag) {
+	return {
+		type: flag,
+		payload: {
+			status: statuses.load,
+			//cities: null,
+		}
+	}
+}
+function weatherSuccAction(flag, data) {
+	return {
+		type: flag,
+		payload: {
+			status: statuses.succ,
+			//cities: data,
+		}
+	}
+}
+function weatherErrorAction(flag, data) {
+	return {
+		type: flag,
+		payload: {
+			status: statuses.err,
+			//cities: null,
+		}
+	}
+}

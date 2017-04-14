@@ -16,6 +16,7 @@ import SearchTickets from "./SearchTickets";
 import ListCities from "./ListCities";
 import Loading from "./Loading";
 import Calendar from "./Calendar";
+import Flights from "./Flights";
 
 var dateMin = new Date();
 var dateMax = new Date(dateMin.getFullYear()+1, dateMin.getMonth(), dateMin.getDate());
@@ -28,14 +29,13 @@ var initState = {
 		from: {
 			name: null,
 			date: dateMin,
-			
+			weather: null,
 		},
 		to: {
 			name: null,
 			date: null,
+			weather: null,
 		},
-		minDate: dateMin,
-		maxDate: dateMax,
 		//На деле дата должна приходить с сервера, а не определястя у пользователя
 		/*fromDate: formatDate(dateMin),//Хранить как есть, парсить в другом месте
 		toDate: null,*/
@@ -44,6 +44,30 @@ var initState = {
 			adult: 1,
 			kind: 0,
 			baby: 0,
+		},
+
+		minValues: {//Все минимальные значения
+			from: {
+				date: dateMin,
+			},
+			to: {
+				date: dateMax,
+			},
+			tickets: {
+				adult: 1,
+				kind: 0,
+				baby: 0,
+			},
+		},
+		cacheData: {
+			//Кэшировать города не стал, т.к. в задании четко написано подгружать их при нажатии
+			weather: null,
+			/*
+			Погодное Api блокирует запросы
+			от устройств с частыми одинаковыми ообращения.
+			По этому кэширую, в идеале, лучше держать кэш на сервере и сравнивать по дате
+			*/
+
 		}
 	},
 }
@@ -85,13 +109,24 @@ class App extends Component {
 			case statuses.gC:
 				elems.push(
 					<Calendar
-						minDate={store.minDate}
-						maxDate={store.maxDate}
+						minDate={store.minValues.from.minDate}
+						maxDate={store.minValues.to.maxDate}
 						selectMinDate={store.from.date}
 						selectMaxDate={store.to.date}
 						direction = {store.direction}
 						hideCalendar={props.hideCalendar}
 						setDate={props.setDate}
+					/>
+				);
+				break;
+			case statuses.sF:
+				elems.push(
+					<Flights
+						cityFrom={store.from.name}
+						cityTo={store.to.name}
+						weatherFrom={store.from.weather}
+						weatherTo={store.from.weather}
+						hideFlights={store.getFlights}
 					/>
 				);
 				break;
@@ -110,8 +145,12 @@ class App extends Component {
 				directions={directions}
 				getCalendar={props.getCalendar}
 			/>
-			<Tickets tickets={tickets} />
-			<SearchTickets />
+			<Tickets tickets={tickets} minTickets={store.minValues.tickets} setTicket={props.setTicket}/>
+			<SearchTickets getWeather={store.getWeather}/>
+			<Flights
+						
+						
+					/>
 			{elems}
       	</div>
     	);
@@ -145,6 +184,16 @@ function mapDispatchToProps(dispatch) {
 		},
 		setDate: (direct, date)=>{
 			dispatch(actions.setDateAction(direct, date));
+		},
+		setTicket: (age, value)=>{
+			dispatch(actions.setTicketAction(age, value));
+			//tickets
+		},
+		getWeather: (direction)=>{
+			dispatch(actions.getWeatherAction());
+		},
+		hideWeather: ()=>{
+			dispatch(actions.hideWeatherAction());
 		},
 	};
 }

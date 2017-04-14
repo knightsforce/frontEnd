@@ -67,6 +67,13 @@ function voyage(state={}, action) {
 			[newState.from.name, newState.to.name]=[newState.to.name, newState.from.name];
 			return newState;
 			break;
+
+		case flags.setTicket:
+			let tickets = Object.assign({}, state.tickets);
+			tickets[action.payload.age]=action.payload.value;
+			
+			return Object.assign({}, state, {tickets: tickets});
+			break;
 	}
 	return state;
 }
