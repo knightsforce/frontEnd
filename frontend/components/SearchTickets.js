@@ -9,7 +9,16 @@ export default class SearchTickets extends Component {
 	}
 	
 	handleClick() {
-		this.props.getFlights();
+		let cityF = this.props.cityFrom;
+		let cityT = this.props.cityTo;
+		/*
+			Если хоть один город не выбран,
+			ничего не делать
+		*/
+		if(!(cityF && cityT)) return;
+		else {
+			this.props.getWeather(cityF, cityT);
+		}
 	}
 
 	render() {

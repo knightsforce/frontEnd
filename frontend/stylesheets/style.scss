@@ -56,16 +56,16 @@ $grey: rgba(0, 0, 0, 0.5);
 }
 .App {
 	background-color: $appBackground;
-	width: 25%;
+	width: 20%;
 	margin: 0 auto;
 	position: relative;
 	@include columnDirection();
 
 	@media screen and (max-width: 1600px) {
-		width: 30%;
+		width: 20%;
 	}
 	@media screen and (max-width: 1200px) {
-		width: 35%;
+		width: 30%;
 	}
 
 	@media screen and (max-width: 800px) {
@@ -94,6 +94,7 @@ $grey: rgba(0, 0, 0, 0.5);
 	}
 
 	.Navigation {
+		margin-top: 15px;
 		nav {
 			ul {
 				list-style: none;
@@ -210,6 +211,7 @@ $grey: rgba(0, 0, 0, 0.5);
 			@include lineDirection();
 			margin: 0 auto;
 			padding-left: 17%;
+			height: 45px;
 			.date-block {
 				@include columnDirection();
 				align-self: center;
@@ -235,6 +237,14 @@ $grey: rgba(0, 0, 0, 0.5);
 					color: darken($referenceColor, 50%);
 					background-color: lighten($elemsBackground, 10%);
 				}
+			}
+			.remove {
+				width: 10px;
+				height: 10px;
+				margin-left: 10px;
+				transform: rotate(45deg);
+				padding: 1px;
+				cursor: pointer;
 			}
 		}
 	}
@@ -292,9 +302,9 @@ $grey: rgba(0, 0, 0, 0.5);
 	}
 	.SearchTickets {
 		bottom: 0;
-		
 		background-color: $elemsBackground;
 		padding: 5px;
+		cursor: pointer;
 		p {
 			text-align: center;
 		}
@@ -327,6 +337,14 @@ $grey: rgba(0, 0, 0, 0.5);
 		overflow: hidden;
 		background-color: $appBackground;
 		padding: 5% 5% 5% 5%;
+		.close {
+			position: absolute;
+			top: 5px;
+			right: 10px;
+			font-size: 150%;
+			transform: rotate(45deg);
+			cursor: pointer;
+		}
 		.wrap-content {
 			@include lineDirection();
 
@@ -377,6 +395,10 @@ $grey: rgba(0, 0, 0, 0.5);
 						padding: 5px 5px;
 						margin-bottom: 10px;
 						cursor: pointer;
+						&.select {
+							color: $grey;
+							opacity: 0.8;
+						}
 					}
 				}
 			}
@@ -425,6 +447,7 @@ $grey: rgba(0, 0, 0, 0.5);
 						
 						td {
 							color: rgb(0,0,0);
+							margin: 0;
 							padding: 5px;
 							text-align: right;
 							cursor: pointer;
@@ -528,6 +551,7 @@ $grey: rgba(0, 0, 0, 0.5);
 					align-items: center;
 					width: 50%;
 					height: 40px;
+					cursor: pointer;
 					span {
 						margin: 0 10px;
 					}

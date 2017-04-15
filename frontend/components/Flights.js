@@ -1,39 +1,53 @@
 import React, { Component } from 'react';
 import flags from "../lib/flags";
-import {objW} from "../lib/dist";
-console.log("-----", objW);
+import {convertTemp} from "../lib/dist";
 
 export default class Flights extends Component {
 	constructor(props) {
 		super(props);
 		this.props = props;
+		
+		this.handleFromClick=this.handleFromClick.bind(this);
+		this.handleToClick=this.handleToClick.bind(this);
+		this.hide=this.hide.bind(this);
+		
 		this.state = {
-			direction: "from"
+			direction: "from",
 		}
+
+	}
+
+	handleFromClick() {
+		this.setState({direction: "from"});
+	}
+
+	handleToClick() {
+		this.setState({direction: "to"});
+	}
+	
+	hide() {
+		this.props.hideWeather();
 	}
 
 	render() {
 		
 		let props = this.props;
 		
-		let cityFrom = "Город1";//props.cityFrom;
-		let cityTo = "Город2";//props.cityTo;
-		let weatherFrom = objW.list;//props.weatherFrom;
-		let weatherTo = {}//props.weatherTo;
-		
-		let cuttentWeather=null;
+		let cityFrom = props.cityFrom;
+		let cityTo = props.cityTo;
+		let weatherFrom = props.weatherFrom;
+		let weatherTo = props.weatherTo;
+
+		let currentWeather=null;
 		switch(this.state.direction) {
 			case "from":
-				cuttentWeather=weatherFrom;
+				currentWeather=weatherFrom;
 				break;
 			case "to":
-				cuttentWeather=weatherTo;
+				currentWeather=weatherTo;
 				break;
 		}
-		/*
-			ul - час
-			div - день
-		*/
+
 		let hours = [];
 		let days = [];
 		let fields = null;
@@ -41,8 +55,10 @@ export default class Flights extends Component {
 		let currentDate, elem;
 		let prevDate=["a"];//Чтобы false т.к. буква больше числа 
 
-		cuttentWeather.forEach((item, i)=>{
+		currentWeather.list.forEach((item, i)=>{
+			
 			currentDate=item.dt_txt.split(" ");//[2017-02-16, 12:00:00]
+			
 			if(currentDate[0]>prevDate[0]) {
 				days.push(
 					<div className="day">
@@ -65,7 +81,7 @@ export default class Flights extends Component {
 				</tr>,
 				<tr>
 					<td>Температура: </td>
-					<td>{item.main.temp}</td>
+					<td>{convertTemp(item.main.temp)}</td>
 				</tr>,
 				<tr>
 					<td>Давление: </td>
@@ -100,15 +116,12 @@ export default class Flights extends Component {
 			
 			prevDate=currentDate;
 		});
-		/*for(let key in cuttentWeather) {
-
-		}*/
 
 	    return (
 	      <div className="Flights">
 	      	<div className="wrap-content">
 	      		<div className="head">
-	      			<div className="back"/>
+	      			<div className="back" onClick={this.hide} />
 	      			<div className="text">
 	      				<p>{cityFrom}</p>
 	      				<div className="image"></div>
@@ -119,11 +132,18 @@ export default class Flights extends Component {
 	      			Шаг 7 из 7. Проверьте данные
 	      		</div>
 	      		<div className="directions">
-	      			<div>
+	      			<div
+	      				className={(this.state.direction=="from") ? "active" : null}
+	      				onClick={this.handleFromClick}
+	      			>
 	      				<div className="image"/>
 	      				<span>Туда</span>
 	      			</div>
-	      			<div>
+
+	      			<div
+	      				className={(this.state.direction=="to") ? "active" : null}
+	      				onClick={this.handleToClick}
+	      			>
 	      				<div className="image"/>
 	      				<span>Обратно</span>
 	      			</div>

@@ -24,7 +24,6 @@ export default class Calendar extends Component {
     }
 
     this.state = {
-      //Должно быть так: selectDate: this.props.selectDate,
       selectDate: selectDate,
     }
   }
@@ -257,10 +256,6 @@ class Day extends Component {
     this.handleClick = this.handleClick.bind(this);
 
   }
-
-  /*componentDidMount() {
-    //this.active=this.props.active;//Проверять className мало нуно запомнить в коде
-  }*/
 
   handleClick() {
     if(this.props.handlerDate) {

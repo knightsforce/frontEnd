@@ -6,6 +6,7 @@ const flags = {
 	changeDirect: "CHANGE_DIRECTION",
 	
 	setCity: "SET_CITY",
+	hideListCity: "HIDE_LIST_CITY",
 	
 	getCalendar: "GET_CALENDAR",
 	hideCalendar: "HIDE_CALENDAR",
@@ -19,7 +20,12 @@ const flags = {
 	weatherLoad: "WEATHER_LOAD",
 	weatherSucc: "WEATHER_SUCCESS",
 	weatherErr: "WEATHER_ERROR",
-}
+	weatherCompl: "WEATHER_COMPLITE",
+
+	hideWeather: "HIDE_COMPLITE",
+
+	removeToDate: "ROMOVE_TO_DATE",
+};
 
 let statuses = {
 	load: "loading",
@@ -27,7 +33,8 @@ let statuses = {
 	err: "error",
 	empty: "empty",
 	gC: "getCalendar",
-	sF: "searchWeather",
-}
+	gW: "searchWeather",
+};
+
 export {statuses};
 export default flags;

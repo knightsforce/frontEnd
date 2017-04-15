@@ -21,6 +21,7 @@ function queryCities(direction) {
 				dispatch(citiesSuccAction(flags.citiesSucc, data));
 			},//Пробросить данные
 			error: ()=>{
+				alert("Ошибка, повторите снова");
 				dispatch(citiesErrorAction(flags.citiesErr));
 			},//выдать ошибку
 			dataType: "jsonp",
@@ -43,16 +44,6 @@ function citiesLoadAction(flag) {
 		}
 	}
 }
-
-/*function citiesCompleteAction(flag) {
-	return {
-		type: flag,
-		payload: {
-			status: statuses.comp,
-			cities: null,
-		},
-	}
-}*/
 
 function citiesSuccAction(flag, data) {
 	return {
@@ -160,91 +151,117 @@ function setTicketAction(age, value) {
 
 export {setTicketAction};
 
-
-
-
-
-
-
-
-
-
 function getWeatherAction(city1, city2) {
-	return (dispatch) => {
-		//Добавить direct
-		new Promise((res, rej)=>{
-			
-			dispatch(flightsLoadAction(flags.flightsLoad));
-			$.ajax(weatherURL(city1), {
-				crossDomain: true,
-				dataType: "jsonp",
-				cache: false,
-				success: (data)=>{
-					//Просто добавляю данные
-					dispatch(flightsSuccAction(flags.flightsSucc, direct, data));
-					res();
-				},
-				error: ()=>{
-					rej();
-				},
-			});
-		})
-		.then(()=>{
-			$.ajax(weatherURL(city2), {
-				crossDomain: true,
-				dataType: "jsonp",
-				cache: false,
-				success: (data)=>{
-					//Просто добавляю данные
-					dispatch(flightsSuccAction(flags.flightsSucc, direct, data));
-					res();
-				},
-				error: ()=>{
-					rej();
-				},
-			});
-		})
-		.then(()=>{
 
+	return (dispatch) => {
+
+		dispatch(weatherLoadAction());
+
+		function request(city, direct) {
+
+			return new Promise((res, rej)=>{
+
+				$.ajax(weatherURL(city), {
+					crossDomain: true,
+					dataType: "jsonp",
+					cache: false,
+					success: (data)=>{
+						//Просто добавляю данные
+						dispatch(weatherSuccAction(direct, data));
+						res();
+					},
+					error: (err)=>{
+						rej(err);
+					},
+				});
+
+			});
+		}
+
+		request(city1, "from").then(()=>{
+			return request(city2, "to");
+			/*
+				Вызываю запрос черезпромис для 1 города,
+				если успешно, повторить запрос для 2 города
+				Если ошибка хоть в 1 запросе - не отрисовывать погоду
+			*/ 
 		})
-		.catch(()=>{
-			dispatch(flightsErrorAction(flags.flightsErr));
-			//Стереть погоду из from и to
-		});
-		$.ajax(createURL(), {
-			
-			
-			
+		.then(()=>{
+			dispatch(weatherCompliteAction());
+		})
+		.catch((err)=>{
+			alert("Ошибка, повторите снова");
+			console.log(err);
+			dispatch(weatherErrorAction());
 		});
 	}
 }
 
 export {getWeatherAction};
 
-function weatherLoadAction(flag) {
+function weatherLoadAction() {
 	return {
-		type: flag,
+		type: flags.weatherLoad,
 		payload: {
 			status: statuses.load,
-			//cities: null,
 		}
 	}
 }
-function weatherSuccAction(flag, data) {
+function weatherSuccAction(direct, data) {
 	return {
-		type: flag,
+		type: flags.weatherSucc,
 		payload: {
-			status: statuses.succ,
-			//cities: data,
+			direction: direct,
+			weather: data,
 		}
 	}
 }
-function weatherErrorAction(flag, data) {
+function weatherErrorAction() {
 	return {
-		type: flag,
+		type: flags.weatherErr,
 		payload: {
 			status: statuses.err,
+		}
+	}
+}
+
+function weatherCompliteAction(data) {
+	return {
+		type: flags.weatherCompl,
+		payload: {
+			status: statuses.gW,
 			//cities: null,
 		}
 	}
 }
+
+function hideWeatherAction() {
+	return {
+		type: flags.hideWeather,
+		payload: {
+			status: statuses.empty,
+		}
+	}
+}
+
+export {hideWeatherAction};
+
+function removeToDateAction() {
+	return {
+		type: flags.removeToDate,
+		payload: null,
+	}
+}
+
+export {removeToDateAction};
+
+function hideListCitiesAction() {
+	return {
+		type: flags.hideListCity,
+		payload: {
+			status: statuses.empty,
+		},
+	}
+}
+
+export {hideListCitiesAction};

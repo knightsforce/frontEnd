@@ -67,8 +67,8 @@ class Directions extends Component {
 		let props = this.props;
 
 	    return (
-		    <div className="direction">
-		    	<h5 onClick={this.handleClick}>{props.name}</h5>
+		    <div className="direction" onClick={this.handleClick}>
+		    	<h5>{props.name}</h5>
 		    	<span>Все аэропорты</span>
 		    </div>
 	    );
@@ -81,16 +81,11 @@ class Castling extends Component {
 		super(props);
 		this.props = props;
 		this.handleClick = this.handleClick.bind(this);
-		//this.handleMouseDown = this.handleMouseDown.bind(this);
 	}
 
 	handleClick() {
 		this.props.castling();
 	}
-
-	/*handleMouseDown() {
-		e.preventDefault();//отменяю выделение текста
-	}*/
 
 	render() {
 		let props = this.props;

@@ -12,17 +12,17 @@
 
 .App {
   background-color: #0080FF;
-  width: 25%;
+  width: 20%;
   margin: 0 auto;
   position: relative;
   display: flex;
   flex-direction: column; }
   @media screen and (max-width: 1600px) {
     .App {
-      width: 30%; } }
+      width: 20%; } }
   @media screen and (max-width: 1200px) {
     .App {
-      width: 35%; } }
+      width: 30%; } }
   @media screen and (max-width: 800px) {
     .App {
       width: 50%; } }
@@ -43,19 +43,21 @@
       position: absolute;
       top: 5px;
       right: 10px; }
-  .App .Navigation nav ul {
-    list-style: none;
-    text-transform: uppercase;
-    font-size: 50%;
-    display: flex;
-    flex-direction: row; }
-    .App .Navigation nav ul li {
-      text-align: center;
-      flex-grow: 1;
-      padding-bottom: 5px; }
-      .App .Navigation nav ul li.active {
-        font-weight: bolder;
-        border-bottom: 2px solid white; }
+  .App .Navigation {
+    margin-top: 15px; }
+    .App .Navigation nav ul {
+      list-style: none;
+      text-transform: uppercase;
+      font-size: 50%;
+      display: flex;
+      flex-direction: row; }
+      .App .Navigation nav ul li {
+        text-align: center;
+        flex-grow: 1;
+        padding-bottom: 5px; }
+        .App .Navigation nav ul li.active {
+          font-weight: bolder;
+          border-bottom: 2px solid white; }
   .App .Route {
     padding-top: 2%;
     padding-right: 10%;
@@ -140,7 +142,8 @@
       display: flex;
       flex-direction: row;
       margin: 0 auto;
-      padding-left: 17%; }
+      padding-left: 17%;
+      height: 45px; }
       .App .RouteDetails .wrap .date-block {
         display: flex;
         flex-direction: column;
@@ -162,6 +165,13 @@
         .App .RouteDetails .wrap .add:active {
           color: gray;
           background-color: #0000bf; }
+      .App .RouteDetails .wrap .remove {
+        width: 10px;
+        height: 10px;
+        margin-left: 10px;
+        transform: rotate(45deg);
+        padding: 1px;
+        cursor: pointer; }
   .App .Tickets {
     display: flex;
     flex-direction: row;
@@ -207,7 +217,8 @@
   .App .SearchTickets {
     bottom: 0;
     background-color: #00008c;
-    padding: 5px; }
+    padding: 5px;
+    cursor: pointer; }
     .App .SearchTickets p {
       text-align: center; }
   .App .Loading {
@@ -242,6 +253,13 @@
     overflow: hidden;
     background-color: #0080FF;
     padding: 5% 5% 5% 5%; }
+    .App .ListCities .close {
+      position: absolute;
+      top: 5px;
+      right: 10px;
+      font-size: 150%;
+      transform: rotate(45deg);
+      cursor: pointer; }
     .App .ListCities .wrap-content {
       display: flex;
       flex-direction: row; }
@@ -287,6 +305,9 @@
             padding: 5px 5px;
             margin-bottom: 10px;
             cursor: pointer; }
+            .App .ListCities .wrap-content .wrap-list ul li.select {
+              color: rgba(0, 0, 0, 0.5);
+              opacity: 0.8; }
   .App .Calendar {
     position: absolute;
     top: 5%;
@@ -323,6 +344,7 @@
             color: #737373; }
           .App .Calendar .wrap-content .month-list .month table td {
             color: black;
+            margin: 0;
             padding: 5px;
             text-align: right;
             cursor: pointer; }
@@ -418,7 +440,8 @@
           justify-content: center;
           align-items: center;
           width: 50%;
-          height: 40px; }
+          height: 40px;
+          cursor: pointer; }
           .App .Flights .wrap-content .directions div span {
             margin: 0 10px; }
           .App .Flights .wrap-content .directions div:first-child {

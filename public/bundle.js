@@ -808,6 +808,7 @@ var flags = {
 	changeDirect: "CHANGE_DIRECTION",
 
 	setCity: "SET_CITY",
+	hideListCity: "HIDE_LIST_CITY",
 
 	getCalendar: "GET_CALENDAR",
 	hideCalendar: "HIDE_CALENDAR",
@@ -820,7 +821,12 @@ var flags = {
 
 	weatherLoad: "WEATHER_LOAD",
 	weatherSucc: "WEATHER_SUCCESS",
-	weatherErr: "WEATHER_ERROR"
+	weatherErr: "WEATHER_ERROR",
+	weatherCompl: "WEATHER_COMPLITE",
+
+	hideWeather: "HIDE_COMPLITE",
+
+	removeToDate: "ROMOVE_TO_DATE"
 };
 
 var statuses = {
@@ -829,8 +835,9 @@ var statuses = {
 	err: "error",
 	empty: "empty",
 	gC: "getCalendar",
-	sF: "searchWeather"
+	gW: "searchWeather"
 };
+
 exports.statuses = statuses;
 exports.default = flags;
 
@@ -3934,7 +3941,12 @@ module.exports = SyntheticUIEvent;
 Object.defineProperty(exports, "__esModule", {
 	value: true
 });
-var apiKey = "56a1510587c66f12617a4b223517d";
+/*
+	Вспомогательные вещи
+*/
+
+var apiCityKey = "56a1510587c66f12617a4b223517d";
+var apiWeatherKey = "b0c3ca3f687f4fea56920e048d83d523";
 
 var months = ["Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль", "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь"];
 
@@ -3965,15 +3977,14 @@ exports.formatDate = formatDate;
 
 
 function citiesURL(text) {
-	return "https://api.meetup.com/cities.json/?country&key=" + apiKey + "&sign=true";
+	return "https://api.meetup.com/cities.json/?country&key=" + apiCityKey + "&sign=true";
 }
 
 exports.citiesURL = citiesURL;
 
-////$.ajax("https://api.meetup.com/cities.json/?country&key=56a1510587c66f12617a4b223517d&sign=true", {dataType: "jsonp", success: (data)=>{console.log(data)}})
 
 function weatherURL(city) {
-	return "" + city;
+	return "http://api.openweathermap.org/data/2.5/forecast?q=" + city + "&APPID=" + apiWeatherKey + "&mode=xml";
 }
 
 exports.weatherURL = weatherURL;
@@ -4006,1158 +4017,11 @@ function isCoincid(year1, year2, month1, month2) {
 exports.isCoincid = isCoincid;
 
 
-var objW = {
-	"cod": "200",
-	"message": 0.0032,
-	"cnt": 36,
-	"list": [{
-		"dt": 1487246400,
-		"main": {
-			"temp": 286.67,
-			"temp_min": 281.556,
-			"temp_max": 286.67,
-			"pressure": 972.73,
-			"sea_level": 1046.46,
-			"grnd_level": 972.73,
-			"humidity": 75,
-			"temp_kf": 5.11
-		},
-		"weather": [{
-			"id": 800,
-			"main": "Clear",
-			"description": "clear sky",
-			"icon": "01d"
-		}],
-		"clouds": {
-			"all": 0
-		},
-		"wind": {
-			"speed": 1.81,
-			"deg": 247.501
-		},
-		"sys": {
-			"pod": "d"
-		},
-		"dt_txt": "2017-02-16 12:00:00"
-	}, {
-		"dt": 1487257200,
-		"main": {
-			"temp": 285.66,
-			"temp_min": 281.821,
-			"temp_max": 285.66,
-			"pressure": 970.91,
-			"sea_level": 1044.32,
-			"grnd_level": 970.91,
-			"humidity": 70,
-			"temp_kf": 3.84
-		},
-		"weather": [{
-			"id": 800,
-			"main": "Clear",
-			"description": "clear sky",
-			"icon": "01d"
-		}],
-		"clouds": {
-			"all": 0
-		},
-		"wind": {
-			"speed": 1.59,
-			"deg": 290.501
-		},
-		"sys": {
-			"pod": "d"
-		},
-		"dt_txt": "2017-02-16 15:00:00"
-	}, {
-		"dt": 1487268000,
-		"main": {
-			"temp": 277.05,
-			"temp_min": 274.498,
-			"temp_max": 277.05,
-			"pressure": 970.44,
-			"sea_level": 1044.7,
-			"grnd_level": 970.44,
-			"humidity": 90,
-			"temp_kf": 2.56
-		},
-		"weather": [{
-			"id": 800,
-			"main": "Clear",
-			"description": "clear sky",
-			"icon": "01n"
-		}],
-		"clouds": {
-			"all": 0
-		},
-		"wind": {
-			"speed": 1.41,
-			"deg": 263.5
-		},
-		"sys": {
-			"pod": "n"
-		},
-		"dt_txt": "2017-02-16 18:00:00"
-	}, {
-		"dt": 1487278800,
-		"main": {
-			"temp": 272.78,
-			"temp_min": 271.503,
-			"temp_max": 272.78,
-			"pressure": 969.32,
-			"sea_level": 1044.14,
-			"grnd_level": 969.32,
-			"humidity": 80,
-			"temp_kf": 1.28
-		},
-		"weather": [{
-			"id": 800,
-			"main": "Clear",
-			"description": "clear sky",
-			"icon": "01n"
-		}],
-		"clouds": {
-			"all": 0
-		},
-		"wind": {
-			"speed": 2.24,
-			"deg": 205.502
-		},
-		"sys": {
-			"pod": "n"
-		},
-		"dt_txt": "2017-02-16 21:00:00"
-	}, {
-		"dt": 1487289600,
-		"main": {
-			"temp": 273.341,
-			"temp_min": 273.341,
-			"temp_max": 273.341,
-			"pressure": 968.14,
-			"sea_level": 1042.96,
-			"grnd_level": 968.14,
-			"humidity": 85,
-			"temp_kf": 0
-		},
-		"weather": [{
-			"id": 803,
-			"main": "Clouds",
-			"description": "broken clouds",
-			"icon": "04n"
-		}],
-		"clouds": {
-			"all": 76
-		},
-		"wind": {
-			"speed": 3.59,
-			"deg": 224.003
-		},
-		"sys": {
-			"pod": "n"
-		},
-		"dt_txt": "2017-02-17 00:00:00"
-	}, {
-		"dt": 1487300400,
-		"main": {
-			"temp": 275.568,
-			"temp_min": 275.568,
-			"temp_max": 275.568,
-			"pressure": 966.6,
-			"sea_level": 1041.39,
-			"grnd_level": 966.6,
-			"humidity": 89,
-			"temp_kf": 0
-		},
-		"weather": [{
-			"id": 500,
-			"main": "Rain",
-			"description": "light rain",
-			"icon": "10n"
-		}],
-		"clouds": {
-			"all": 76
-		},
-		"wind": {
-			"speed": 3.77,
-			"deg": 237.002
-		},
-		"rain": {
-			"3h": 0.32
-		},
-		"sys": {
-			"pod": "n"
-		},
-		"dt_txt": "2017-02-17 03:00:00"
-	}, {
-		"dt": 1487311200,
-		"main": {
-			"temp": 276.478,
-			"temp_min": 276.478,
-			"temp_max": 276.478,
-			"pressure": 966.45,
-			"sea_level": 1041.21,
-			"grnd_level": 966.45,
-			"humidity": 97,
-			"temp_kf": 0
-		},
-		"weather": [{
-			"id": 501,
-			"main": "Rain",
-			"description": "moderate rain",
-			"icon": "10n"
-		}],
-		"clouds": {
-			"all": 92
-		},
-		"wind": {
-			"speed": 3.81,
-			"deg": 268.005
-		},
-		"rain": {
-			"3h": 4.9
-		},
-		"sys": {
-			"pod": "n"
-		},
-		"dt_txt": "2017-02-17 06:00:00"
-	}, {
-		"dt": 1487322000,
-		"main": {
-			"temp": 276.67,
-			"temp_min": 276.67,
-			"temp_max": 276.67,
-			"pressure": 967.41,
-			"sea_level": 1041.95,
-			"grnd_level": 967.41,
-			"humidity": 100,
-			"temp_kf": 0
-		},
-		"weather": [{
-			"id": 500,
-			"main": "Rain",
-			"description": "light rain",
-			"icon": "10d"
-		}],
-		"clouds": {
-			"all": 64
-		},
-		"wind": {
-			"speed": 2.6,
-			"deg": 266.504
-		},
-		"rain": {
-			"3h": 1.37
-		},
-		"sys": {
-			"pod": "d"
-		},
-		"dt_txt": "2017-02-17 09:00:00"
-	}, {
-		"dt": 1487332800,
-		"main": {
-			"temp": 278.253,
-			"temp_min": 278.253,
-			"temp_max": 278.253,
-			"pressure": 966.98,
-			"sea_level": 1040.89,
-			"grnd_level": 966.98,
-			"humidity": 95,
-			"temp_kf": 0
-		},
-		"weather": [{
-			"id": 500,
-			"main": "Rain",
-			"description": "light rain",
-			"icon": "10d"
-		}],
-		"clouds": {
-			"all": 92
-		},
-		"wind": {
-			"speed": 3.17,
-			"deg": 261.501
-		},
-		"rain": {
-			"3h": 0.12
-		},
-		"sys": {
-			"pod": "d"
-		},
-		"dt_txt": "2017-02-17 12:00:00"
-	}, {
-		"dt": 1487343600,
-		"main": {
-			"temp": 276.455,
-			"temp_min": 276.455,
-			"temp_max": 276.455,
-			"pressure": 966.38,
-			"sea_level": 1040.17,
-			"grnd_level": 966.38,
-			"humidity": 99,
-			"temp_kf": 0
-		},
-		"weather": [{
-			"id": 500,
-			"main": "Rain",
-			"description": "light rain",
-			"icon": "10d"
-		}],
-		"clouds": {
-			"all": 92
-		},
-		"wind": {
-			"speed": 3.21,
-			"deg": 268.001
-		},
-		"rain": {
-			"3h": 2.12
-		},
-		"sys": {
-			"pod": "d"
-		},
-		"dt_txt": "2017-02-17 15:00:00"
-	}, {
-		"dt": 1487354400,
-		"main": {
-			"temp": 275.639,
-			"temp_min": 275.639,
-			"temp_max": 275.639,
-			"pressure": 966.39,
-			"sea_level": 1040.65,
-			"grnd_level": 966.39,
-			"humidity": 95,
-			"temp_kf": 0
-		},
-		"weather": [{
-			"id": 500,
-			"main": "Rain",
-			"description": "light rain",
-			"icon": "10n"
-		}],
-		"clouds": {
-			"all": 88
-		},
-		"wind": {
-			"speed": 3.17,
-			"deg": 258.001
-		},
-		"rain": {
-			"3h": 0.7
-		},
-		"snow": {
-			"3h": 0.0775
-		},
-		"sys": {
-			"pod": "n"
-		},
-		"dt_txt": "2017-02-17 18:00:00"
-	}, {
-		"dt": 1487365200,
-		"main": {
-			"temp": 275.459,
-			"temp_min": 275.459,
-			"temp_max": 275.459,
-			"pressure": 966.3,
-			"sea_level": 1040.8,
-			"grnd_level": 966.3,
-			"humidity": 96,
-			"temp_kf": 0
-		},
-		"weather": [{
-			"id": 500,
-			"main": "Rain",
-			"description": "light rain",
-			"icon": "10n"
-		}],
-		"clouds": {
-			"all": 88
-		},
-		"wind": {
-			"speed": 3.71,
-			"deg": 265.503
-		},
-		"rain": {
-			"3h": 1.16
-		},
-		"snow": {
-			"3h": 0.075
-		},
-		"sys": {
-			"pod": "n"
-		},
-		"dt_txt": "2017-02-17 21:00:00"
-	}, {
-		"dt": 1487376000,
-		"main": {
-			"temp": 275.035,
-			"temp_min": 275.035,
-			"temp_max": 275.035,
-			"pressure": 966.43,
-			"sea_level": 1041.02,
-			"grnd_level": 966.43,
-			"humidity": 99,
-			"temp_kf": 0
-		},
-		"weather": [{
-			"id": 500,
-			"main": "Rain",
-			"description": "light rain",
-			"icon": "10n"
-		}],
-		"clouds": {
-			"all": 92
-		},
-		"wind": {
-			"speed": 3.56,
-			"deg": 273.5
-		},
-		"rain": {
-			"3h": 1.37
-		},
-		"snow": {
-			"3h": 0.1525
-		},
-		"sys": {
-			"pod": "n"
-		},
-		"dt_txt": "2017-02-18 00:00:00"
-	}, {
-		"dt": 1487386800,
-		"main": {
-			"temp": 274.965,
-			"temp_min": 274.965,
-			"temp_max": 274.965,
-			"pressure": 966.36,
-			"sea_level": 1041.17,
-			"grnd_level": 966.36,
-			"humidity": 97,
-			"temp_kf": 0
-		},
-		"weather": [{
-			"id": 500,
-			"main": "Rain",
-			"description": "light rain",
-			"icon": "10n"
-		}],
-		"clouds": {
-			"all": 88
-		},
-		"wind": {
-			"speed": 2.66,
-			"deg": 285.502
-		},
-		"rain": {
-			"3h": 0.79
-		},
-		"snow": {
-			"3h": 0.52
-		},
-		"sys": {
-			"pod": "n"
-		},
-		"dt_txt": "2017-02-18 03:00:00"
-	}, {
-		"dt": 1487397600,
-		"main": {
-			"temp": 274.562,
-			"temp_min": 274.562,
-			"temp_max": 274.562,
-			"pressure": 966.75,
-			"sea_level": 1041.57,
-			"grnd_level": 966.75,
-			"humidity": 98,
-			"temp_kf": 0
-		},
-		"weather": [{
-			"id": 500,
-			"main": "Rain",
-			"description": "light rain",
-			"icon": "10n"
-		}],
-		"clouds": {
-			"all": 88
-		},
-		"wind": {
-			"speed": 1.46,
-			"deg": 276.5
-		},
-		"rain": {
-			"3h": 0.08
-		},
-		"snow": {
-			"3h": 0.06
-		},
-		"sys": {
-			"pod": "n"
-		},
-		"dt_txt": "2017-02-18 06:00:00"
-	}, {
-		"dt": 1487408400,
-		"main": {
-			"temp": 275.648,
-			"temp_min": 275.648,
-			"temp_max": 275.648,
-			"pressure": 967.21,
-			"sea_level": 1041.74,
-			"grnd_level": 967.21,
-			"humidity": 99,
-			"temp_kf": 0
-		},
-		"weather": [{
-			"id": 500,
-			"main": "Rain",
-			"description": "light rain",
-			"icon": "10d"
-		}],
-		"clouds": {
-			"all": 56
-		},
-		"wind": {
-			"speed": 1.5,
-			"deg": 251.008
-		},
-		"rain": {
-			"3h": 0.02
-		},
-		"snow": {
-			"3h": 0.03
-		},
-		"sys": {
-			"pod": "d"
-		},
-		"dt_txt": "2017-02-18 09:00:00"
-	}, {
-		"dt": 1487419200,
-		"main": {
-			"temp": 277.927,
-			"temp_min": 277.927,
-			"temp_max": 277.927,
-			"pressure": 966.06,
-			"sea_level": 1039.98,
-			"grnd_level": 966.06,
-			"humidity": 95,
-			"temp_kf": 0
-		},
-		"weather": [{
-			"id": 800,
-			"main": "Clear",
-			"description": "clear sky",
-			"icon": "02d"
-		}],
-		"clouds": {
-			"all": 8
-		},
-		"wind": {
-			"speed": 0.86,
-			"deg": 244.004
-		},
-		"rain": {},
-		"snow": {},
-		"sys": {
-			"pod": "d"
-		},
-		"dt_txt": "2017-02-18 12:00:00"
-	}, {
-		"dt": 1487430000,
-		"main": {
-			"temp": 278.367,
-			"temp_min": 278.367,
-			"temp_max": 278.367,
-			"pressure": 964.57,
-			"sea_level": 1038.35,
-			"grnd_level": 964.57,
-			"humidity": 89,
-			"temp_kf": 0
-		},
-		"weather": [{
-			"id": 800,
-			"main": "Clear",
-			"description": "clear sky",
-			"icon": "02d"
-		}],
-		"clouds": {
-			"all": 8
-		},
-		"wind": {
-			"speed": 1.62,
-			"deg": 79.5024
-		},
-		"rain": {},
-		"snow": {},
-		"sys": {
-			"pod": "d"
-		},
-		"dt_txt": "2017-02-18 15:00:00"
-	}, {
-		"dt": 1487440800,
-		"main": {
-			"temp": 273.797,
-			"temp_min": 273.797,
-			"temp_max": 273.797,
-			"pressure": 964.13,
-			"sea_level": 1038.48,
-			"grnd_level": 964.13,
-			"humidity": 91,
-			"temp_kf": 0
-		},
-		"weather": [{
-			"id": 800,
-			"main": "Clear",
-			"description": "clear sky",
-			"icon": "01n"
-		}],
-		"clouds": {
-			"all": 0
-		},
-		"wind": {
-			"speed": 2.42,
-			"deg": 77.0026
-		},
-		"rain": {},
-		"snow": {},
-		"sys": {
-			"pod": "n"
-		},
-		"dt_txt": "2017-02-18 18:00:00"
-	}, {
-		"dt": 1487451600,
-		"main": {
-			"temp": 271.239,
-			"temp_min": 271.239,
-			"temp_max": 271.239,
-			"pressure": 963.39,
-			"sea_level": 1038.21,
-			"grnd_level": 963.39,
-			"humidity": 93,
-			"temp_kf": 0
-		},
-		"weather": [{
-			"id": 800,
-			"main": "Clear",
-			"description": "clear sky",
-			"icon": "01n"
-		}],
-		"clouds": {
-			"all": 0
-		},
-		"wind": {
-			"speed": 2.42,
-			"deg": 95.5017
-		},
-		"rain": {},
-		"snow": {},
-		"sys": {
-			"pod": "n"
-		},
-		"dt_txt": "2017-02-18 21:00:00"
-	}, {
-		"dt": 1487462400,
-		"main": {
-			"temp": 269.553,
-			"temp_min": 269.553,
-			"temp_max": 269.553,
-			"pressure": 962.39,
-			"sea_level": 1037.44,
-			"grnd_level": 962.39,
-			"humidity": 92,
-			"temp_kf": 0
-		},
-		"weather": [{
-			"id": 800,
-			"main": "Clear",
-			"description": "clear sky",
-			"icon": "01n"
-		}],
-		"clouds": {
-			"all": 0
-		},
-		"wind": {
-			"speed": 1.96,
-			"deg": 101.004
-		},
-		"rain": {},
-		"snow": {},
-		"sys": {
-			"pod": "n"
-		},
-		"dt_txt": "2017-02-19 00:00:00"
-	}, {
-		"dt": 1487473200,
-		"main": {
-			"temp": 268.198,
-			"temp_min": 268.198,
-			"temp_max": 268.198,
-			"pressure": 961.28,
-			"sea_level": 1036.51,
-			"grnd_level": 961.28,
-			"humidity": 84,
-			"temp_kf": 0
-		},
-		"weather": [{
-			"id": 800,
-			"main": "Clear",
-			"description": "clear sky",
-			"icon": "01n"
-		}],
-		"clouds": {
-			"all": 0
-		},
-		"wind": {
-			"speed": 1.06,
-			"deg": 121.5
-		},
-		"rain": {},
-		"snow": {},
-		"sys": {
-			"pod": "n"
-		},
-		"dt_txt": "2017-02-19 03:00:00"
-	}, {
-		"dt": 1487484000,
-		"main": {
-			"temp": 267.295,
-			"temp_min": 267.295,
-			"temp_max": 267.295,
-			"pressure": 961.16,
-			"sea_level": 1036.45,
-			"grnd_level": 961.16,
-			"humidity": 86,
-			"temp_kf": 0
-		},
-		"weather": [{
-			"id": 800,
-			"main": "Clear",
-			"description": "clear sky",
-			"icon": "01n"
-		}],
-		"clouds": {
-			"all": 0
-		},
-		"wind": {
-			"speed": 1.17,
-			"deg": 155.005
-		},
-		"rain": {},
-		"snow": {},
-		"sys": {
-			"pod": "n"
-		},
-		"dt_txt": "2017-02-19 06:00:00"
-	}, {
-		"dt": 1487494800,
-		"main": {
-			"temp": 272.956,
-			"temp_min": 272.956,
-			"temp_max": 272.956,
-			"pressure": 962.03,
-			"sea_level": 1036.85,
-			"grnd_level": 962.03,
-			"humidity": 84,
-			"temp_kf": 0
-		},
-		"weather": [{
-			"id": 800,
-			"main": "Clear",
-			"description": "clear sky",
-			"icon": "01d"
-		}],
-		"clouds": {
-			"all": 0
-		},
-		"wind": {
-			"speed": 1.66,
-			"deg": 195.002
-		},
-		"rain": {},
-		"snow": {},
-		"sys": {
-			"pod": "d"
-		},
-		"dt_txt": "2017-02-19 09:00:00"
-	}, {
-		"dt": 1487505600,
-		"main": {
-			"temp": 277.422,
-			"temp_min": 277.422,
-			"temp_max": 277.422,
-			"pressure": 962.23,
-			"sea_level": 1036.06,
-			"grnd_level": 962.23,
-			"humidity": 89,
-			"temp_kf": 0
-		},
-		"weather": [{
-			"id": 800,
-			"main": "Clear",
-			"description": "clear sky",
-			"icon": "01d"
-		}],
-		"clouds": {
-			"all": 0
-		},
-		"wind": {
-			"speed": 1.32,
-			"deg": 357.003
-		},
-		"rain": {},
-		"snow": {},
-		"sys": {
-			"pod": "d"
-		},
-		"dt_txt": "2017-02-19 12:00:00"
-	}, {
-		"dt": 1487516400,
-		"main": {
-			"temp": 277.984,
-			"temp_min": 277.984,
-			"temp_max": 277.984,
-			"pressure": 962.15,
-			"sea_level": 1035.86,
-			"grnd_level": 962.15,
-			"humidity": 87,
-			"temp_kf": 0
-		},
-		"weather": [{
-			"id": 800,
-			"main": "Clear",
-			"description": "clear sky",
-			"icon": "01d"
-		}],
-		"clouds": {
-			"all": 0
-		},
-		"wind": {
-			"speed": 1.58,
-			"deg": 48.5031
-		},
-		"rain": {},
-		"snow": {},
-		"sys": {
-			"pod": "d"
-		},
-		"dt_txt": "2017-02-19 15:00:00"
-	}, {
-		"dt": 1487527200,
-		"main": {
-			"temp": 272.459,
-			"temp_min": 272.459,
-			"temp_max": 272.459,
-			"pressure": 963.31,
-			"sea_level": 1037.81,
-			"grnd_level": 963.31,
-			"humidity": 90,
-			"temp_kf": 0
-		},
-		"weather": [{
-			"id": 800,
-			"main": "Clear",
-			"description": "clear sky",
-			"icon": "01n"
-		}],
-		"clouds": {
-			"all": 0
-		},
-		"wind": {
-			"speed": 1.16,
-			"deg": 75.5042
-		},
-		"rain": {},
-		"snow": {},
-		"sys": {
-			"pod": "n"
-		},
-		"dt_txt": "2017-02-19 18:00:00"
-	}, {
-		"dt": 1487538000,
-		"main": {
-			"temp": 269.473,
-			"temp_min": 269.473,
-			"temp_max": 269.473,
-			"pressure": 964.65,
-			"sea_level": 1039.76,
-			"grnd_level": 964.65,
-			"humidity": 83,
-			"temp_kf": 0
-		},
-		"weather": [{
-			"id": 800,
-			"main": "Clear",
-			"description": "clear sky",
-			"icon": "01n"
-		}],
-		"clouds": {
-			"all": 0
-		},
-		"wind": {
-			"speed": 1.12,
-			"deg": 174.002
-		},
-		"rain": {},
-		"snow": {},
-		"sys": {
-			"pod": "n"
-		},
-		"dt_txt": "2017-02-19 21:00:00"
-	}, {
-		"dt": 1487548800,
-		"main": {
-			"temp": 268.793,
-			"temp_min": 268.793,
-			"temp_max": 268.793,
-			"pressure": 965.92,
-			"sea_level": 1041.32,
-			"grnd_level": 965.92,
-			"humidity": 80,
-			"temp_kf": 0
-		},
-		"weather": [{
-			"id": 800,
-			"main": "Clear",
-			"description": "clear sky",
-			"icon": "01n"
-		}],
-		"clouds": {
-			"all": 0
-		},
-		"wind": {
-			"speed": 2.11,
-			"deg": 207.502
-		},
-		"rain": {},
-		"snow": {},
-		"sys": {
-			"pod": "n"
-		},
-		"dt_txt": "2017-02-20 00:00:00"
-	}, {
-		"dt": 1487559600,
-		"main": {
-			"temp": 268.106,
-			"temp_min": 268.106,
-			"temp_max": 268.106,
-			"pressure": 966.4,
-			"sea_level": 1042.18,
-			"grnd_level": 966.4,
-			"humidity": 85,
-			"temp_kf": 0
-		},
-		"weather": [{
-			"id": 800,
-			"main": "Clear",
-			"description": "clear sky",
-			"icon": "01n"
-		}],
-		"clouds": {
-			"all": 0
-		},
-		"wind": {
-			"speed": 1.67,
-			"deg": 191.001
-		},
-		"rain": {},
-		"snow": {},
-		"sys": {
-			"pod": "n"
-		},
-		"dt_txt": "2017-02-20 03:00:00"
-	}, {
-		"dt": 1487570400,
-		"main": {
-			"temp": 267.655,
-			"temp_min": 267.655,
-			"temp_max": 267.655,
-			"pressure": 967.4,
-			"sea_level": 1043.43,
-			"grnd_level": 967.4,
-			"humidity": 84,
-			"temp_kf": 0
-		},
-		"weather": [{
-			"id": 800,
-			"main": "Clear",
-			"description": "clear sky",
-			"icon": "01n"
-		}],
-		"clouds": {
-			"all": 0
-		},
-		"wind": {
-			"speed": 1.61,
-			"deg": 194.001
-		},
-		"rain": {},
-		"snow": {},
-		"sys": {
-			"pod": "n"
-		},
-		"dt_txt": "2017-02-20 06:00:00"
-	}, {
-		"dt": 1487581200,
-		"main": {
-			"temp": 273.75,
-			"temp_min": 273.75,
-			"temp_max": 273.75,
-			"pressure": 968.84,
-			"sea_level": 1044.23,
-			"grnd_level": 968.84,
-			"humidity": 83,
-			"temp_kf": 0
-		},
-		"weather": [{
-			"id": 800,
-			"main": "Clear",
-			"description": "clear sky",
-			"icon": "01d"
-		}],
-		"clouds": {
-			"all": 0
-		},
-		"wind": {
-			"speed": 2.49,
-			"deg": 208.5
-		},
-		"rain": {},
-		"snow": {},
-		"sys": {
-			"pod": "d"
-		},
-		"dt_txt": "2017-02-20 09:00:00"
-	}, {
-		"dt": 1487592000,
-		"main": {
-			"temp": 279.302,
-			"temp_min": 279.302,
-			"temp_max": 279.302,
-			"pressure": 968.37,
-			"sea_level": 1042.52,
-			"grnd_level": 968.37,
-			"humidity": 83,
-			"temp_kf": 0
-		},
-		"weather": [{
-			"id": 800,
-			"main": "Clear",
-			"description": "clear sky",
-			"icon": "01d"
-		}],
-		"clouds": {
-			"all": 0
-		},
-		"wind": {
-			"speed": 2.46,
-			"deg": 252.001
-		},
-		"rain": {},
-		"snow": {},
-		"sys": {
-			"pod": "d"
-		},
-		"dt_txt": "2017-02-20 12:00:00"
-	}, {
-		"dt": 1487602800,
-		"main": {
-			"temp": 279.343,
-			"temp_min": 279.343,
-			"temp_max": 279.343,
-			"pressure": 967.9,
-			"sea_level": 1041.64,
-			"grnd_level": 967.9,
-			"humidity": 81,
-			"temp_kf": 0
-		},
-		"weather": [{
-			"id": 800,
-			"main": "Clear",
-			"description": "clear sky",
-			"icon": "01d"
-		}],
-		"clouds": {
-			"all": 0
-		},
-		"wind": {
-			"speed": 3.21,
-			"deg": 268.001
-		},
-		"rain": {},
-		"snow": {},
-		"sys": {
-			"pod": "d"
-		},
-		"dt_txt": "2017-02-20 15:00:00"
-	}, {
-		"dt": 1487613600,
-		"main": {
-			"temp": 274.443,
-			"temp_min": 274.443,
-			"temp_max": 274.443,
-			"pressure": 968.19,
-			"sea_level": 1042.66,
-			"grnd_level": 968.19,
-			"humidity": 88,
-			"temp_kf": 0
-		},
-		"weather": [{
-			"id": 801,
-			"main": "Clouds",
-			"description": "few clouds",
-			"icon": "02n"
-		}],
-		"clouds": {
-			"all": 24
-		},
-		"wind": {
-			"speed": 3.27,
-			"deg": 257.501
-		},
-		"rain": {},
-		"snow": {},
-		"sys": {
-			"pod": "n"
-		},
-		"dt_txt": "2017-02-20 18:00:00"
-	}, {
-		"dt": 1487624400,
-		"main": {
-			"temp": 272.424,
-			"temp_min": 272.424,
-			"temp_max": 272.424,
-			"pressure": 968.38,
-			"sea_level": 1043.17,
-			"grnd_level": 968.38,
-			"humidity": 85,
-			"temp_kf": 0
-		},
-		"weather": [{
-			"id": 801,
-			"main": "Clouds",
-			"description": "few clouds",
-			"icon": "02n"
-		}],
-		"clouds": {
-			"all": 20
-		},
-		"wind": {
-			"speed": 3.57,
-			"deg": 255.503
-		},
-		"rain": {},
-		"snow": {},
-		"sys": {
-			"pod": "n"
-		},
-		"dt_txt": "2017-02-20 21:00:00"
-	}],
-	"city": {
-		"id": 6940463,
-		"name": "Altstadt",
-		"coord": {
-			"lat": 48.137,
-			"lon": 11.5752
-		},
-		"country": "none"
-	}
-};
+function convertTemp(t) {
+	return Math.round(t - 273);
+}
 
-exports.objW = objW;
+exports.convertTemp = convertTemp;
 
 /***/ }),
 /* 98 */
@@ -12856,10 +11720,6 @@ var initState = {
 				kind: 0,
 				baby: 0
 			}
-		},
-		cacheData: {
-			//Кэшировать города не стал, т.к. в задании четко написано подгружать их при нажатии
-			weather: null
 		}
 	}
 };
@@ -12889,6 +11749,9 @@ var App = function (_Component) {
 				to: store.to
 			};
 
+			var cityFrom = store.from.name;
+			var cityTo = store.to.name;
+
 			var tickets = store.tickets;
 			var elems = [];
 
@@ -12899,14 +11762,17 @@ var App = function (_Component) {
 				case _flags.statuses.succ:
 					elems.push(_react2.default.createElement(_ListCities2.default, {
 						direction: store.direction,
+						cityFrom: cityFrom,
+						cityTo: cityTo,
 						data: store.cities,
-						setCity: props.setCity
+						setCity: props.setCity,
+						hideListCities: props.hideListCities
 					}));
 					break;
 				case _flags.statuses.gC:
 					elems.push(_react2.default.createElement(_Calendar2.default, {
-						minDate: store.minValues.from.minDate,
-						maxDate: store.minValues.to.maxDate,
+						minDate: store.minValues.from.date,
+						maxDate: store.minValues.to.date,
 						selectMinDate: store.from.date,
 						selectMaxDate: store.to.date,
 						direction: store.direction,
@@ -12914,13 +11780,14 @@ var App = function (_Component) {
 						setDate: props.setDate
 					}));
 					break;
-				case _flags.statuses.sF:
+				case _flags.statuses.gW:
+
 					elems.push(_react2.default.createElement(_Flights2.default, {
-						cityFrom: store.from.name,
-						cityTo: store.to.name,
+						cityFrom: cityFrom,
+						cityTo: cityTo,
 						weatherFrom: store.from.weather,
-						weatherTo: store.from.weather,
-						hideFlights: store.getFlights
+						weatherTo: store.to.weather,
+						hideWeather: props.hideWeather
 					}));
 					break;
 			}
@@ -12937,11 +11804,14 @@ var App = function (_Component) {
 				}),
 				_react2.default.createElement(_RouteDetails2.default, {
 					directions: directions,
-					getCalendar: props.getCalendar
+					getCalendar: props.getCalendar,
+					removeToDate: props.removeToDate
 				}),
 				_react2.default.createElement(_Tickets2.default, { tickets: tickets, minTickets: store.minValues.tickets, setTicket: props.setTicket }),
-				_react2.default.createElement(_SearchTickets2.default, { getWeather: store.getWeather }),
-				_react2.default.createElement(_Flights2.default, null),
+				_react2.default.createElement(_SearchTickets2.default, {
+					cityFrom: cityFrom,
+					cityTo: cityTo,
+					getWeather: props.getWeather }),
 				elems
 			);
 		}
@@ -12963,7 +11833,9 @@ function mapDispatchToProps(dispatch) {
 		setCity: function setCity(direct, city) {
 			dispatch(actions.setCityAction(direct, city));
 		},
-
+		hideListCities: function hideListCities() {
+			dispatch(actions.hideListCitiesAction());
+		},
 		castling: function castling() {
 			dispatch(actions.castlingAction());
 		},
@@ -12976,20 +11848,22 @@ function mapDispatchToProps(dispatch) {
 		setDate: function setDate(direct, date) {
 			dispatch(actions.setDateAction(direct, date));
 		},
+		removeToDate: function removeToDate() {
+			dispatch(actions.removeToDateAction());
+		},
+
 		setTicket: function setTicket(age, value) {
 			dispatch(actions.setTicketAction(age, value));
 			//tickets
 		},
-		getWeather: function getWeather(direction) {
-			dispatch(actions.getWeatherAction());
+		getWeather: function getWeather(cityF, cityT) {
+			dispatch(actions.getWeatherAction(cityF, cityT));
 		},
 		hideWeather: function hideWeather() {
 			dispatch(actions.hideWeatherAction());
 		}
 	};
 }
-
-//----------------------------------
 
 exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(App);
 exports.store = store;
@@ -13104,7 +11978,6 @@ var Calendar = function (_Component) {
     }
 
     _this.state = {
-      //Должно быть так: selectDate: this.props.selectDate,
       selectDate: selectDate
     };
     return _this;
@@ -13419,10 +12292,6 @@ var Day = function (_Component3) {
     return _this3;
   }
 
-  /*componentDidMount() {
-    //this.active=this.props.active;//Проверять className мало нуно запомнить в коде
-  }*/
-
   (0, _createClass3.default)(Day, [{
     key: "handleClick",
     value: function handleClick() {
@@ -13489,8 +12358,6 @@ var _dist = __webpack_require__(97);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-console.log("-----", _dist.objW);
-
 var Flights = function (_Component) {
 	(0, _inherits3.default)(Flights, _Component);
 
@@ -13500,36 +12367,54 @@ var Flights = function (_Component) {
 		var _this = (0, _possibleConstructorReturn3.default)(this, (Flights.__proto__ || (0, _getPrototypeOf2.default)(Flights)).call(this, props));
 
 		_this.props = props;
+
+		_this.handleFromClick = _this.handleFromClick.bind(_this);
+		_this.handleToClick = _this.handleToClick.bind(_this);
+		_this.hide = _this.hide.bind(_this);
+
 		_this.state = {
 			direction: "from"
 		};
+
 		return _this;
 	}
 
 	(0, _createClass3.default)(Flights, [{
+		key: "handleFromClick",
+		value: function handleFromClick() {
+			this.setState({ direction: "from" });
+		}
+	}, {
+		key: "handleToClick",
+		value: function handleToClick() {
+			this.setState({ direction: "to" });
+		}
+	}, {
+		key: "hide",
+		value: function hide() {
+			this.props.hideWeather();
+		}
+	}, {
 		key: "render",
 		value: function render() {
 
 			var props = this.props;
 
-			var cityFrom = "Город1"; //props.cityFrom;
-			var cityTo = "Город2"; //props.cityTo;
-			var weatherFrom = _dist.objW.list; //props.weatherFrom;
-			var weatherTo = {}; //props.weatherTo;
+			var cityFrom = props.cityFrom;
+			var cityTo = props.cityTo;
+			var weatherFrom = props.weatherFrom;
+			var weatherTo = props.weatherTo;
 
-			var cuttentWeather = null;
+			var currentWeather = null;
 			switch (this.state.direction) {
 				case "from":
-					cuttentWeather = weatherFrom;
+					currentWeather = weatherFrom;
 					break;
 				case "to":
-					cuttentWeather = weatherTo;
+					currentWeather = weatherTo;
 					break;
 			}
-			/*
-   	ul - час
-   	div - день
-   */
+
 			var hours = [];
 			var days = [];
 			var fields = null;
@@ -13538,8 +12423,10 @@ var Flights = function (_Component) {
 			    elem = void 0;
 			var prevDate = ["a"]; //Чтобы false т.к. буква больше числа 
 
-			cuttentWeather.forEach(function (item, i) {
+			currentWeather.list.forEach(function (item, i) {
+
 				currentDate = item.dt_txt.split(" "); //[2017-02-16, 12:00:00]
+
 				if (currentDate[0] > prevDate[0]) {
 					days.push(_react2.default.createElement(
 						"div",
@@ -13588,7 +12475,7 @@ var Flights = function (_Component) {
 					_react2.default.createElement(
 						"td",
 						null,
-						item.main.temp
+						(0, _dist.convertTemp)(item.main.temp)
 					)
 				), _react2.default.createElement(
 					"tr",
@@ -13664,8 +12551,6 @@ var Flights = function (_Component) {
 
 				prevDate = currentDate;
 			});
-			/*for(let key in cuttentWeather) {
-   		}*/
 
 			return _react2.default.createElement(
 				"div",
@@ -13676,7 +12561,7 @@ var Flights = function (_Component) {
 					_react2.default.createElement(
 						"div",
 						{ className: "head" },
-						_react2.default.createElement("div", { className: "back" }),
+						_react2.default.createElement("div", { className: "back", onClick: this.hide }),
 						_react2.default.createElement(
 							"div",
 							{ className: "text" },
@@ -13703,7 +12588,10 @@ var Flights = function (_Component) {
 						{ className: "directions" },
 						_react2.default.createElement(
 							"div",
-							null,
+							{
+								className: this.state.direction == "from" ? "active" : null,
+								onClick: this.handleFromClick
+							},
 							_react2.default.createElement("div", { className: "image" }),
 							_react2.default.createElement(
 								"span",
@@ -13713,7 +12601,10 @@ var Flights = function (_Component) {
 						),
 						_react2.default.createElement(
 							"div",
-							null,
+							{
+								className: this.state.direction == "to" ? "active" : null,
+								onClick: this.handleToClick
+							},
 							_react2.default.createElement("div", { className: "image" }),
 							_react2.default.createElement(
 								"span",
@@ -13863,25 +12754,52 @@ var ListCities = function (_Component) {
 		var _this = (0, _possibleConstructorReturn3.default)(this, (ListCities.__proto__ || (0, _getPrototypeOf2.default)(ListCities)).call(this, props));
 
 		_this.props = props;
+		_this.handleCloseClick = _this.handleCloseClick.bind(_this);
+		_this.checkCity = _this.checkCity.bind(_this);
 
+		switch (_this.props.direction) {
+			case "from":
+				_this.secondCity = _this.props.cityTo;
+				break;
+			case "to":
+				_this.secondCity = _this.props.cityFrom;
+				break;
+		}
 		return _this;
 	}
 
 	(0, _createClass3.default)(ListCities, [{
+		key: "handleCloseClick",
+		value: function handleCloseClick() {
+			this.props.hideListCities();
+		}
+	}, {
+		key: "checkCity",
+		value: function checkCity(city) {
+			return this.secondCity == city;
+		}
+	}, {
 		key: "render",
 		value: function render() {
+			var _this2 = this;
+
 			var props = this.props;
 			var counts = props.counts;
 			var data = props.data;
 
+			var point = props.direction == "to" ? _react2.default.createElement("p", null) : null;
+
 			var listCountry = data.results.sort(function (a, b) {
 				return a > b;
 			}).map(function (item) {
+				var className = _this2.secondCity == item.city ? "select" : null;
 				return _react2.default.createElement(ItemList, {
 					key: item.members,
 					direction: props.direction,
 					city: item.city,
-					setCity: props.setCity
+					setCity: props.setCity,
+					checkCity: _this2.checkCity,
+					className: className
 				});
 			});
 
@@ -13890,11 +12808,20 @@ var ListCities = function (_Component) {
 				{ className: "ListCities", style: props.style },
 				_react2.default.createElement(
 					"div",
+					{ className: "close", onClick: this.handleCloseClick },
+					"+"
+				),
+				_react2.default.createElement(
+					"div",
 					{ className: "wrap-content" },
 					_react2.default.createElement(
 						"div",
 						{ className: "wrap-image" },
-						_react2.default.createElement("div", { className: "image" })
+						_react2.default.createElement(
+							"div",
+							{ className: "image" },
+							point
+						)
 					),
 					_react2.default.createElement(
 						"div",
@@ -13926,10 +12853,10 @@ var Search = function (_Component2) {
 	function Search(props) {
 		(0, _classCallCheck3.default)(this, Search);
 
-		var _this2 = (0, _possibleConstructorReturn3.default)(this, (Search.__proto__ || (0, _getPrototypeOf2.default)(Search)).call(this, props));
+		var _this3 = (0, _possibleConstructorReturn3.default)(this, (Search.__proto__ || (0, _getPrototypeOf2.default)(Search)).call(this, props));
 
-		_this2.props = props;
-		return _this2;
+		_this3.props = props;
+		return _this3;
 	}
 
 	(0, _createClass3.default)(Search, [{
@@ -13940,7 +12867,7 @@ var Search = function (_Component2) {
 	}, {
 		key: "render",
 		value: function render() {
-			var _this3 = this;
+			var _this4 = this;
 
 			var props = this.props;
 			var counts = props.counts;
@@ -13950,7 +12877,7 @@ var Search = function (_Component2) {
 				_react2.default.createElement("input", {
 					placeholder: props.placeholder || null,
 					ref: function ref(input) {
-						_this3.input = input;
+						_this4.input = input;
 					}
 				})
 			);
@@ -13965,11 +12892,11 @@ var ItemList = function (_Component3) {
 	function ItemList(props) {
 		(0, _classCallCheck3.default)(this, ItemList);
 
-		var _this4 = (0, _possibleConstructorReturn3.default)(this, (ItemList.__proto__ || (0, _getPrototypeOf2.default)(ItemList)).call(this, props));
+		var _this5 = (0, _possibleConstructorReturn3.default)(this, (ItemList.__proto__ || (0, _getPrototypeOf2.default)(ItemList)).call(this, props));
 
-		_this4.props = props;
-		_this4.handleClick = _this4.handleClick.bind(_this4);
-		return _this4;
+		_this5.props = props;
+		_this5.handleClick = _this5.handleClick.bind(_this5);
+		return _this5;
 	}
 
 	(0, _createClass3.default)(ItemList, [{
@@ -13980,6 +12907,10 @@ var ItemList = function (_Component3) {
 	}, {
 		key: "handleClick",
 		value: function handleClick() {
+
+			if (this.props.checkCity(this.props.city)) {
+				return;
+			}
 			this.props.setCity(this.props.direction, this.props.city);
 		}
 	}, {
@@ -13988,7 +12919,7 @@ var ItemList = function (_Component3) {
 			var props = this.props;
 			return _react2.default.createElement(
 				"li",
-				{ onClick: this.handleClick },
+				{ className: props.className, onClick: this.handleClick },
 				props.city
 			);
 		}
@@ -14341,10 +13272,10 @@ var Directions = function (_Component3) {
 
 			return _react2.default.createElement(
 				"div",
-				{ className: "direction" },
+				{ className: "direction", onClick: this.handleClick },
 				_react2.default.createElement(
 					"h5",
-					{ onClick: this.handleClick },
+					null,
 					props.name
 				),
 				_react2.default.createElement(
@@ -14368,7 +13299,6 @@ var Castling = function (_Component4) {
 
 		_this4.props = props;
 		_this4.handleClick = _this4.handleClick.bind(_this4);
-		//this.handleMouseDown = this.handleMouseDown.bind(this);
 		return _this4;
 	}
 
@@ -14377,11 +13307,6 @@ var Castling = function (_Component4) {
 		value: function handleClick() {
 			this.props.castling();
 		}
-
-		/*handleMouseDown() {
-  	e.preventDefault();//отменяю выделение текста
-  }*/
-
 	}, {
 		key: "render",
 		value: function render() {
@@ -14456,7 +13381,7 @@ var RouteDetails = function (_Component) {
 
 		_this.props = props;
 		_this.handleCalendar = _this.handleCalendar.bind(_this);
-		//alert(props.directions.to.date)
+		_this.handleRemoveToDate = _this.handleRemoveToDate.bind(_this);
 		_this.state = {
 			buttonVisible: !props.directions.to.date
 		};
@@ -14476,6 +13401,11 @@ var RouteDetails = function (_Component) {
 			this.props.getCalendar(direct);
 		}
 	}, {
+		key: "handleRemoveToDate",
+		value: function handleRemoveToDate() {
+			this.props.removeToDate();
+		}
+	}, {
 		key: "render",
 		value: function render() {
 			var props = this.props;
@@ -14490,9 +13420,7 @@ var RouteDetails = function (_Component) {
 
 			if (this.state.buttonVisible) {
 
-				elems.push(_react2.default.createElement(ButtonElem, { direct: "to", handleCalendar: this.handleCalendar })
-				//bittonElem({direct: "to", handleCalendar: this.handleCalendar})
-				);
+				elems.push(_react2.default.createElement(ButtonElem, { direct: "to", handleCalendar: this.handleCalendar }));
 			} else {
 
 				elems.push(_react2.default.createElement(DateBlock, {
@@ -14500,7 +13428,7 @@ var RouteDetails = function (_Component) {
 					date: (0, _dist.formatDate)(directions.to.date),
 					direct: "to",
 					handleCalendar: this.handleCalendar
-				}));
+				}), _react2.default.createElement(ButtonRemove, { handleRemoveToDate: this.handleRemoveToDate }));
 			}
 
 			return _react2.default.createElement(
@@ -14521,7 +13449,7 @@ exports.default = RouteDetails;
 
 
 function DateBlock(props) {
-	//let direction=props.direct;
+
 	var handleClick = function handleClick() {
 		props.handleCalendar(props.direct);
 	};
@@ -14542,7 +13470,6 @@ function DateBlock(props) {
 }
 
 function ButtonElem(props) {
-	//let direction=props.direct;
 	var handleClick = function handleClick() {
 		props.handleCalendar(props.direct);
 	};
@@ -14554,6 +13481,20 @@ function ButtonElem(props) {
 			onClick: handleClick
 		},
 		"+ \u041E\u0431\u0440\u0430\u0442\u043D\u043E"
+	);
+}
+
+function ButtonRemove(props) {
+	var handleClick = function handleClick() {
+		props.handleRemoveToDate();
+	};
+	return _react2.default.createElement(
+		"div",
+		{
+			className: "remove",
+			onClick: handleClick
+		},
+		"+"
 	);
 }
 
@@ -14614,7 +13555,15 @@ var SearchTickets = function (_Component) {
 	(0, _createClass3.default)(SearchTickets, [{
 		key: "handleClick",
 		value: function handleClick() {
-			this.props.getFlights();
+			var cityF = this.props.cityFrom;
+			var cityT = this.props.cityTo;
+			/*
+   	Если хоть один город не выбран,
+   	ничего не делать
+   */
+			if (!(cityF && cityT)) return;else {
+				this.props.getWeather(cityF, cityT);
+			}
 		}
 	}, {
 		key: "render",
@@ -14828,7 +13777,7 @@ function Minus(props) {
 Object.defineProperty(exports, "__esModule", {
 	value: true
 });
-exports.getWeatherAction = exports.setTicketAction = exports.castlingAction = exports.setDateAction = exports.hideCalendarAction = exports.getCalendarAction = exports.setCityAction = exports.queryCities = undefined;
+exports.hideListCitiesAction = exports.removeToDateAction = exports.hideWeatherAction = exports.getWeatherAction = exports.setTicketAction = exports.castlingAction = exports.setDateAction = exports.hideCalendarAction = exports.getCalendarAction = exports.setCityAction = exports.queryCities = undefined;
 
 var _promise = __webpack_require__(287);
 
@@ -14862,6 +13811,7 @@ function queryCities(direction) {
 				dispatch(citiesSuccAction(_flags2.default.citiesSucc, data));
 			}, //Пробросить данные
 			error: function error() {
+				alert("Ошибка, повторите снова");
 				dispatch(citiesErrorAction(_flags2.default.citiesErr));
 			}, //выдать ошибку
 			dataType: "jsonp",
@@ -14885,16 +13835,6 @@ function citiesLoadAction(flag) {
 		}
 	};
 }
-
-/*function citiesCompleteAction(flag) {
-	return {
-		type: flag,
-		payload: {
-			status: statuses.comp,
-			cities: null,
-		},
-	}
-}*/
 
 function citiesSuccAction(flag, data) {
 	return {
@@ -15009,73 +13949,118 @@ exports.setTicketAction = setTicketAction;
 
 
 function getWeatherAction(city1, city2) {
-	return function (dispatch) {
-		//Добавить direct
-		new _promise2.default(function (res, rej) {
 
-			dispatch(flightsLoadAction(_flags2.default.flightsLoad));
-			$.ajax((0, _dist.weatherURL)(city1), {
-				crossDomain: true,
-				dataType: "jsonp",
-				cache: false,
-				success: function success(data) {
-					//Просто добавляю данные
-					dispatch(flightsSuccAction(_flags2.default.flightsSucc, direct, data));
-					res();
-				},
-				error: function error() {
-					rej();
-				}
+	return function (dispatch) {
+
+		dispatch(weatherLoadAction());
+
+		function request(city, direct) {
+
+			return new _promise2.default(function (res, rej) {
+
+				$.ajax((0, _dist.weatherURL)(city), {
+					crossDomain: true,
+					dataType: "jsonp",
+					cache: false,
+					success: function success(data) {
+						//Просто добавляю данные
+						dispatch(weatherSuccAction(direct, data));
+						res();
+					},
+					error: function error(err) {
+						rej(err);
+					}
+				});
 			});
+		}
+
+		request(city1, "from").then(function () {
+			return request(city2, "to");
+			/*
+   	Вызываю запрос черезпромис для 1 города,
+   	если успешно, повторить запрос для 2 города
+   	Если ошибка хоть в 1 запросе - не отрисовывать погоду
+   */
 		}).then(function () {
-			$.ajax((0, _dist.weatherURL)(city2), {
-				crossDomain: true,
-				dataType: "jsonp",
-				cache: false,
-				success: function success(data) {
-					//Просто добавляю данные
-					dispatch(flightsSuccAction(_flags2.default.flightsSucc, direct, data));
-					res();
-				},
-				error: function error() {
-					rej();
-				}
-			});
-		}).then(function () {}).catch(function () {
-			dispatch(flightsErrorAction(_flags2.default.flightsErr));
-			//Стереть погоду из from и to
+			dispatch(weatherCompliteAction());
+		}).catch(function (err) {
+			alert("Ошибка, повторите снова");
+			console.log(err);
+			dispatch(weatherErrorAction());
 		});
-		$.ajax(createURL(), {});
 	};
 }
 
 exports.getWeatherAction = getWeatherAction;
 
 
-function weatherLoadAction(flag) {
+function weatherLoadAction() {
 	return {
-		type: flag,
+		type: _flags2.default.weatherLoad,
 		payload: {
 			status: _flags.statuses.load
 		}
 	};
 }
-function weatherSuccAction(flag, data) {
+function weatherSuccAction(direct, data) {
 	return {
-		type: flag,
+		type: _flags2.default.weatherSucc,
 		payload: {
-			status: _flags.statuses.succ
+			direction: direct,
+			weather: data
 		}
 	};
 }
-function weatherErrorAction(flag, data) {
+function weatherErrorAction() {
 	return {
-		type: flag,
+		type: _flags2.default.weatherErr,
 		payload: {
 			status: _flags.statuses.err
 		}
 	};
 }
+
+function weatherCompliteAction(data) {
+	return {
+		type: _flags2.default.weatherCompl,
+		payload: {
+			status: _flags.statuses.gW
+		}
+	};
+}
+
+function hideWeatherAction() {
+	return {
+		type: _flags2.default.hideWeather,
+		payload: {
+			status: _flags.statuses.empty
+		}
+	};
+}
+
+exports.hideWeatherAction = hideWeatherAction;
+
+
+function removeToDateAction() {
+	return {
+		type: _flags2.default.removeToDate,
+		payload: null
+	};
+}
+
+exports.removeToDateAction = removeToDateAction;
+
+
+function hideListCitiesAction() {
+	return {
+		type: _flags2.default.hideListCity,
+		payload: {
+			status: _flags.statuses.empty
+		}
+	};
+}
+
+exports.hideListCitiesAction = hideListCitiesAction;
 
 /***/ }),
 /* 281 */
@@ -15101,12 +14086,9 @@ var _flags2 = _interopRequireDefault(_flags);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /*
-let flags = {
-	citiesLoad: "CTITIES_LOAD",
-	citiesSucc: "CTITIES_SUCCESS",
-	citiesComp: "CTITIES_COMPLETE",
-	//citiesError: "CTITIES_ERROR"//Перерендерить города
-}
+	Многие флаги повторяют функционал, в контексте теста - бесмсленно,
+	но если добавится определенный функционал к какому-то действию, то не придется переписывать
+	в разных файлах, добавляя флаги, а просто здесь вставить еще один case: break.
 */
 
 function voyage() {
@@ -15122,8 +14104,12 @@ function voyage() {
 		case _flags2.default.changeDirect:
 		case _flags2.default.getCalendar:
 		case _flags2.default.hideCalendar:
+		case _flags2.default.weatherCompl:
+		case _flags2.default.hideWeather:
+		case _flags2.default.hideListCity:
 			return (0, _assign2.default)({}, state, action.payload);
 			break;
+
 		case _flags2.default.setCity:
 			currentDirection = (0, _assign2.default)({}, state[action.payload.direction], //from или to
 			{ name: action.payload.name });
@@ -15148,6 +14134,12 @@ function voyage() {
 			return (0, _assign2.default)({}, state, resultObj);
 			break;
 
+		case _flags2.default.removeToDate:
+			var toObj = (0, _assign2.default)({}, state.to, { date: action.payload });
+
+			return (0, _assign2.default)({}, state, { to: toObj });
+			break;
+
 		case _flags2.default.castling:
 			var newFrom = (0, _assign2.default)({}, state.from);
 			var newTo = (0, _assign2.default)({}, state.to);
@@ -15165,6 +14157,32 @@ function voyage() {
 			tickets[action.payload.age] = action.payload.value;
 
 			return (0, _assign2.default)({}, state, { tickets: tickets });
+			break;
+
+		case _flags2.default.weatherLoad:
+			return (0, _assign2.default)({}, state, action.payload);
+			break;
+
+		case _flags2.default.weatherSucc:
+
+			var direct = action.payload.direction;
+
+			var weather = action.payload.weather;
+
+			resultObj = {};
+			resultObj[direct] = null;
+
+			var resulDirect = (0, _assign2.default)({}, state[direct], { weather: weather });
+			resultObj[direct] = resulDirect;
+
+			return (0, _assign2.default)({}, state, resultObj);
+
+		case _flags2.default.weatherErr:
+			return (0, _assign2.default)({}, state, action.payload);
+			break;
+
+		case _flags2.default.weatherCompl:
+			return (0, _assign2.default)({}, state, action.payload);
 			break;
 	}
 	return state;

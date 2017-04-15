@@ -59,16 +59,6 @@ var initState = {
 				baby: 0,
 			},
 		},
-		cacheData: {
-			//Кэшировать города не стал, т.к. в задании четко написано подгружать их при нажатии
-			weather: null,
-			/*
-			Погодное Api блокирует запросы
-			от устройств с частыми одинаковыми ообращения.
-			По этому кэширую, в идеале, лучше держать кэш на сервере и сравнивать по дате
-			*/
-
-		}
 	},
 }
 
@@ -88,6 +78,9 @@ class App extends Component {
 			to: store.to,
 		};
 		
+		let cityFrom = store.from.name;
+		let cityTo = store.to.name;
+
 		let tickets = store.tickets;
 		let elems = [];
 
@@ -101,16 +94,19 @@ class App extends Component {
 				elems.push(
 					<ListCities
 						direction = {store.direction}
+						cityFrom = {cityFrom}
+						cityTo = {cityTo}
 						data = {store.cities}
 						setCity = {props.setCity}
+						hideListCities={props.hideListCities}
 					/>
 				);
 				break;
 			case statuses.gC:
 				elems.push(
 					<Calendar
-						minDate={store.minValues.from.minDate}
-						maxDate={store.minValues.to.maxDate}
+						minDate={store.minValues.from.date}
+						maxDate={store.minValues.to.date}
 						selectMinDate={store.from.date}
 						selectMaxDate={store.to.date}
 						direction = {store.direction}
@@ -119,14 +115,15 @@ class App extends Component {
 					/>
 				);
 				break;
-			case statuses.sF:
+			case statuses.gW:
+	
 				elems.push(
 					<Flights
-						cityFrom={store.from.name}
-						cityTo={store.to.name}
+						cityFrom={cityFrom}
+						cityTo={cityTo}
 						weatherFrom={store.from.weather}
-						weatherTo={store.from.weather}
-						hideFlights={store.getFlights}
+						weatherTo={store.to.weather}
+						hideWeather={props.hideWeather}
 					/>
 				);
 				break;
@@ -144,13 +141,13 @@ class App extends Component {
 			<RouteDetails
 				directions={directions}
 				getCalendar={props.getCalendar}
+				removeToDate={props.removeToDate}
 			/>
 			<Tickets tickets={tickets} minTickets={store.minValues.tickets} setTicket={props.setTicket}/>
-			<SearchTickets getWeather={store.getWeather}/>
-			<Flights
-						
-						
-					/>
+			<SearchTickets
+				cityFrom={cityFrom}
+				cityTo={cityTo}
+				getWeather={props.getWeather}/>
 			{elems}
       	</div>
     	);
@@ -172,7 +169,9 @@ function mapDispatchToProps(dispatch) {
 		setCity: (direct, city)=> {
 			dispatch(actions.setCityAction(direct, city));
 		},
-
+		hideListCities: ()=>{
+			dispatch(actions.hideListCitiesAction());
+		},
 		castling: ()=>{
 			dispatch(actions.castlingAction());
 		},
@@ -185,20 +184,21 @@ function mapDispatchToProps(dispatch) {
 		setDate: (direct, date)=>{
 			dispatch(actions.setDateAction(direct, date));
 		},
+		removeToDate() {
+			dispatch(actions.removeToDateAction());
+		},
 		setTicket: (age, value)=>{
 			dispatch(actions.setTicketAction(age, value));
 			//tickets
 		},
-		getWeather: (direction)=>{
-			dispatch(actions.getWeatherAction());
+		getWeather: (cityF, cityT)=>{
+			dispatch(actions.getWeatherAction(cityF, cityT));
 		},
 		hideWeather: ()=>{
 			dispatch(actions.hideWeatherAction());
 		},
 	};
 }
-
-//----------------------------------
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);
 export {store};

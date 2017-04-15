@@ -7,7 +7,7 @@ export default class RouteDetails extends Component {
 		super(props);
 		this.props = props;
 		this.handleCalendar=this.handleCalendar.bind(this);
-		//alert(props.directions.to.date)
+		this.handleRemoveToDate=this.handleRemoveToDate.bind(this);
 		this.state = {
 			buttonVisible: !props.directions.to.date,
 		};
@@ -21,6 +21,10 @@ export default class RouteDetails extends Component {
 
 	handleCalendar(direct) {
 		this.props.getCalendar(direct);
+	}
+
+	handleRemoveToDate() {
+		this.props.removeToDate();
 	}
 
 	render() {
@@ -40,7 +44,6 @@ export default class RouteDetails extends Component {
 	    	
 	    	elems.push(
 	    		<ButtonElem direct="to" handleCalendar={this.handleCalendar}/>
-	    		//bittonElem({direct: "to", handleCalendar: this.handleCalendar})
 	    	);
 
 	    } else {
@@ -51,7 +54,8 @@ export default class RouteDetails extends Component {
 					date={formatDate(directions.to.date)}
 					direct="to"
 					handleCalendar={this.handleCalendar}
-				/>
+				/>,
+				<ButtonRemove handleRemoveToDate={this.handleRemoveToDate} />
 	    	);
 	    	
 	    }
@@ -67,7 +71,7 @@ export default class RouteDetails extends Component {
 }
 
 function DateBlock(props) {
-	//let direction=props.direct;
+
 	let handleClick = ()=>{
 		props.handleCalendar(props.direct)
 	}
@@ -80,7 +84,6 @@ function DateBlock(props) {
 }
 
 function ButtonElem(props) {
-	//let direction=props.direct;
 	let handleClick = ()=>{
 		props.handleCalendar(props.direct)
 	}
@@ -89,8 +92,18 @@ function ButtonElem(props) {
 	    	type="button"
 	    	className="add"
 	    	onClick={handleClick}
-	    >
-	    	+ Обратно
-	    </button>
+	    >+ Обратно</button>
+	);
+}
+
+function ButtonRemove(props) {
+	let handleClick = ()=> {
+		props.handleRemoveToDate();
+	}
+	return(
+		<div
+	    	className="remove"
+	    	onClick={handleClick}
+	    >+</div>
 	);
 }
