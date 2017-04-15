@@ -586,28 +586,51 @@ $grey: rgba(0, 0, 0, 0.5);
 				overflow-y: auto;
 				.day {
 					border-bottom: 2px solid $color0;
-					padding-bottom: 5px;
+					margin-bottom: 30px;
 					& > p {
+						background-color: $elemsBackground;
 						text-align: center;
-						color: $color0;
+						color: $referenceColor;
+						padding: 5px 0;
+						margin-bottom: 20px;
 					}
-					margin-bottom: 10px;
-					ul.hours {
+					
+					.hours {
+						border: none;
 						margin-bottom: 20px;
 						list-style: none;
-						& > p {
-							color: $grey;
+						caption {
+							background-color: $grey;
+							color: $referenceColor;
 							text-align: left;
-							margin-bottom: 5px;
+							padding: 5px;
+							margin-bottom: 15px;
+							border-radius: 100px;
 						}
-						li {
-							margin: 0 0 5px 25px;
-							span {
-								color: $color0;
-							}
-							span:first-child {
-								color: $appBackground;
-								font-weight: bolder;
+						tbody {
+							
+							tr {
+								margin-bottom: 5px;
+								td {
+									color: $color0;
+									padding: 5px;
+									border-radius: 4px;
+									&:last-child {
+										box-shadow: 0px 0px 5px 0 $grey;
+									}
+									&:first-child {
+										color: $appBackground;
+										font-weight: bolder;
+										padding-left: 25px;
+										box-shadow: 0px 0px 5px 0 $grey;
+									}
+								}
+								&:first-child {
+									td {
+										box-shadow: 0px 0px 5px 1px $grey;
+									}
+
+								}
 							}
 						}
 					}
