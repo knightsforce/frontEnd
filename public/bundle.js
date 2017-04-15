@@ -13557,90 +13557,90 @@ var Flights = function (_Component) {
 				//weather
 				//wind
 				fields = [_react2.default.createElement(
-					"li",
+					"tr",
 					null,
 					_react2.default.createElement(
-						"span",
+						"td",
 						null,
 						item.weather[0].description
 					)
 				), _react2.default.createElement(
-					"li",
+					"tr",
 					null,
 					_react2.default.createElement(
-						"span",
+						"td",
 						null,
 						"\u041E\u0431\u043B\u0430\u0447\u043D\u043E\u0441\u0442\u044C: "
 					),
 					_react2.default.createElement(
-						"span",
+						"td",
 						null,
 						item.clouds.all + " %"
 					)
 				), _react2.default.createElement(
-					"li",
+					"tr",
 					null,
 					_react2.default.createElement(
-						"span",
+						"td",
 						null,
 						"\u0422\u0435\u043C\u043F\u0435\u0440\u0430\u0442\u0443\u0440\u0430: "
 					),
 					_react2.default.createElement(
-						"span",
+						"td",
 						null,
 						item.main.temp
 					)
 				), _react2.default.createElement(
-					"li",
+					"tr",
 					null,
 					_react2.default.createElement(
-						"span",
+						"td",
 						null,
 						"\u0414\u0430\u0432\u043B\u0435\u043D\u0438\u0435: "
 					),
 					_react2.default.createElement(
-						"span",
+						"td",
 						null,
 						item.main.pressure
 					)
 				), _react2.default.createElement(
-					"li",
+					"tr",
 					null,
 					_react2.default.createElement(
-						"span",
+						"td",
 						null,
 						"\u0412\u043B\u0430\u0436\u043D\u043E\u0441\u0442\u044C: "
 					),
 					_react2.default.createElement(
-						"span",
+						"td",
 						null,
 						item.main.humidity + " %"
 					)
 				), _react2.default.createElement(
-					"li",
+					"tr",
 					null,
 					_react2.default.createElement(
-						"span",
+						"td",
 						null,
 						"\u0421\u043A\u043E\u0440\u043E\u0441\u0442\u044C \u0432\u0435\u0442\u0440\u0430: "
 					),
 					_react2.default.createElement(
-						"span",
+						"td",
 						null,
 						item.wind.speed + " \u043C/\u0441"
 					)
 				)];
 				if (item.snow) {
 					fields.push(_react2.default.createElement(
-						"li",
+						"tr",
 						null,
 						_react2.default.createElement(
-							"span",
+							"td",
 							null,
 							"\u041E\u0431\u044A\u0435\u043C \u0441\u043D\u0435\u0433\u0430 \u0437\u0430 3 \u0447\u0430\u0441\u0430: "
 						),
 						_react2.default.createElement(
-							"span",
+							"td",
 							null,
 							"" + item.snow["3h"]
 						)
@@ -13648,14 +13648,18 @@ var Flights = function (_Component) {
 				}
 
 				hours.push(_react2.default.createElement(
-					"ul",
+					"table",
 					{ className: "hours" },
 					_react2.default.createElement(
-						"p",
+						"caption",
 						null,
 						currentDate[1]
 					),
-					fields
+					_react2.default.createElement(
+						"tbody",
+						null,
+						fields
+					)
 				));
 
 				prevDate = currentDate;

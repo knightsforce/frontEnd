@@ -454,25 +454,39 @@
         overflow-y: auto; }
         .App .Flights .wrap-content .weather-block .day {
           border-bottom: 2px solid #404040;
-          padding-bottom: 5px;
-          margin-bottom: 10px; }
+          margin-bottom: 30px; }
           .App .Flights .wrap-content .weather-block .day > p {
+            background-color: #00008c;
             text-align: center;
-            color: #404040; }
-          .App .Flights .wrap-content .weather-block .day ul.hours {
+            color: white;
+            padding: 5px 0;
+            margin-bottom: 20px; }
+          .App .Flights .wrap-content .weather-block .day .hours {
+            border: none;
             margin-bottom: 20px;
             list-style: none; }
-            .App .Flights .wrap-content .weather-block .day ul.hours > p {
-              color: rgba(0, 0, 0, 0.5);
+            .App .Flights .wrap-content .weather-block .day .hours caption {
+              background-color: rgba(0, 0, 0, 0.5);
+              color: white;
               text-align: left;
+              padding: 5px;
+              margin-bottom: 15px;
+              border-radius: 100px; }
+            .App .Flights .wrap-content .weather-block .day .hours tbody tr {
               margin-bottom: 5px; }
-            .App .Flights .wrap-content .weather-block .day ul.hours li {
-              margin: 0 0 5px 25px; }
-              .App .Flights .wrap-content .weather-block .day ul.hours li span {
-                color: #404040; }
-              .App .Flights .wrap-content .weather-block .day ul.hours li span:first-child {
-                color: #0080FF;
-                font-weight: bolder; }
+              .App .Flights .wrap-content .weather-block .day .hours tbody tr td {
+                color: #404040;
+                padding: 5px;
+                border-radius: 4px; }
+                .App .Flights .wrap-content .weather-block .day .hours tbody tr td:last-child {
+                  box-shadow: 0px 0px 5px 0 rgba(0, 0, 0, 0.5); }
+                .App .Flights .wrap-content .weather-block .day .hours tbody tr td:first-child {
+                  color: #0080FF;
+                  font-weight: bolder;
+                  padding-left: 25px;
+                  box-shadow: 0px 0px 5px 0 rgba(0, 0, 0, 0.5); }
+              .App .Flights .wrap-content .weather-block .day .hours tbody tr:first-child td {
+                box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.5); }
           .App .Flights .wrap-content .weather-block .day:last-child {
             border: none; }
 

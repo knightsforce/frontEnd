@@ -56,44 +56,46 @@ export default class Flights extends Component {
 			//weather
 			//wind
 			fields=[
-				<li>
-					<span>{item.weather[0].description}</span>
-				</li>,
-				<li>
-					<span>Облачность: </span>
-					<span>{`${item.clouds.all} %`}</span>
-				</li>,
-				<li>
-					<span>Температура: </span>
-					<span>{item.main.temp}</span>
-				</li>,
-				<li>
-					<span>Давление: </span>
-					<span>{item.main.pressure}</span>
-				</li>,
-				<li>
-					<span>Влажность: </span>
-					<span>{`${item.main.humidity} %`}</span>
-				</li>,
-				<li>
-					<span>Скорость ветра: </span>
-					<span>{`${item.wind.speed} м/с`}</span>
-				</li>,
+				<tr>
+					<td>{item.weather[0].description}</td>
+				</tr>,
+				<tr>
+					<td>Облачность: </td>
+					<td>{`${item.clouds.all} %`}</td>
+				</tr>,
+				<tr>
+					<td>Температура: </td>
+					<td>{item.main.temp}</td>
+				</tr>,
+				<tr>
+					<td>Давление: </td>
+					<td>{item.main.pressure}</td>
+				</tr>,
+				<tr>
+					<td>Влажность: </td>
+					<td>{`${item.main.humidity} %`}</td>
+				</tr>,
+				<tr>
+					<td>Скорость ветра: </td>
+					<td>{`${item.wind.speed} м/с`}</td>
+				</tr>,
 			];
 			if(item.snow) {
 				fields.push(
-					<li>
-						<span>Объем снега за 3 часа: </span>
-						<span>{`${item.snow["3h"]}`}</span>
-					</li>,
+					<tr>
+						<td>Объем снега за 3 часа: </td>
+						<td>{`${item.snow["3h"]}`}</td>
+					</tr>,
 				);
 			}
 				
 			hours.push(
-				<ul className="hours">
-					<p>{currentDate[1]}</p>
-					{fields}
-				</ul>
+				<table className="hours">
+					<caption>{currentDate[1]}</caption>
+					<tbody>
+						{fields}
+					</tbody>
+				</table>
 			);
 			
 			prevDate=currentDate;
