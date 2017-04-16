@@ -7,6 +7,11 @@ export default class ListCities extends Component {
 		this.props = props;
 		this.handleCloseClick = this.handleCloseClick.bind(this);
 		this.checkCity = this.checkCity.bind(this);
+		this.sorting = this.sorting.bind(this);
+
+		this.state = {
+    		sortStr: "",
+    	};
 
 		switch(this.props.direction) {
 			case "from":
@@ -22,6 +27,10 @@ export default class ListCities extends Component {
 		this.props.hideListCities();
 	}
 
+	sorting(value) {
+		this.setState({sortStr: value.toLowerCase()});
+	}
+
 	checkCity(city) {
 		return (this.secondCity == city);
 	}
@@ -31,12 +40,33 @@ export default class ListCities extends Component {
 		let counts = props.counts;
 		let data = props.data;
 
-		let point = (props.direction=="to") ? (<p></p>) : null;
+		let point = null;
+		let text = "Туда"
 
-		let listCountry = data.results.sort((a,b)=>{
-			return a>b;
-		})
-		.map((item)=>{
+		if(props.direction=="to") {
+			point = (<p></p>);
+			text = "Обратно";
+		}
+
+		let listCountry = data.results;
+		listCountry = listCountry.sort((a,b)=>{
+			if(a.city.toLowerCase()>b.city.toLowerCase()) return 1;
+			else return -1;
+		});
+		
+		if(this.state.sortStr.length) {
+		//Если длины нет, то естьa пустое поле (пустая строка), то и фильтровать не нужно
+			listCountry=listCountry.filter((item)=>{
+				if(item.city.toLowerCase().indexOf(this.state.sortStr) == 0) {
+					return true;
+				} else {
+					false;
+				}
+			});
+		}
+
+		
+		listCountry = listCountry.map((item)=>{
 			let className = ((this.secondCity==item.city) ? "select" : null);
 			return (
 				<ItemList 
@@ -59,8 +89,8 @@ export default class ListCities extends Component {
 		      	</div>
 			    
 			    <div className="wrap-list">
-			    	<Search focus={true} />
-			    	<div className="text">Туда</div>
+			    	<Search focus={true} sorting={this.sorting} />
+			    	<div className="text">{text}</div>
 			      	<ul>
 			      		{listCountry}
 			      	</ul>
@@ -75,11 +105,34 @@ class Search extends Component {
 	constructor(props) {
 		super(props);
 		this.props = props;
+		this.handleInput = this.handleInput.bind(this);
+    	this.handlePress = this.handlePress.bind(this);
+    	this.defaultPlaceHolder = "Введте название";
 	}
 
 	componentDidMount() {
 		this.input.focus();
 	}
+
+	clearTimer() {
+		this.timer && clearTimeout(this.timer);
+	}
+
+	handleInput(e) {
+    	this.value = e.target.value.trim();
+    	this.clearTimer();
+    	this.timer = setTimeout(()=>{
+    		this.props.sorting(this.value);
+    	}, 1000);//Искать автоматически через секунду после ввода
+    	
+	}
+
+	handlePress(e) {
+    	if(e.key=="Enter") {
+    		this.clearTimer();
+    		this.props.sorting(this.value);
+    	}
+  	}
 
 	render() {
 		let props = this.props;
@@ -87,7 +140,9 @@ class Search extends Component {
 	    return (
 	      <div className="search-input">
 	      	<input
-	      		placeholder={props.placeholder || null}
+	      		onInput={this.handleInput}
+	            onKeyPress={this.handlePress}
+	      		placeholder={props.placeholder || this.defaultPlaceHolder}
 	      		ref={(input)=>{this.input=input}}
 	      	/>
 	      </div>
@@ -100,6 +155,7 @@ class ItemList extends Component {
 		super(props);
 		this.props = props;
 		this.handleClick = this.handleClick.bind(this);
+
 	}
 
 	componentDidMount() {

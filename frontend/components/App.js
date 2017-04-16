@@ -20,7 +20,10 @@ import Flights from "./Flights";
 
 var dateMin = new Date();
 var dateMax = new Date(dateMin.getFullYear()+1, dateMin.getMonth(), dateMin.getDate());
-
+/*
+	Не стал кэшировать города, т.к. в задании явно написано при нажатии обращаться,
+	решил сделать так как написано.
+*/
 var initState = {
 	voyage: {
 		status: "empty",
