@@ -55,8 +55,8 @@ export default class ListCities extends Component {
 		});
 		
 		if(this.state.sortStr.length) {
-		//Если длины нет, то естьa пустое поле (пустая строка), то и фильтровать не нужно
-			listCountry=listCountry.filter((item)=>{
+			//Если длины нет, то естьa пустое поле (пустая строка), то и фильтровать не нужно
+			listCountry = listCountry.filter((item)=>{
 				if(item.city.toLowerCase().indexOf(this.state.sortStr) == 0) {
 					return true;
 				} else {
@@ -65,7 +65,6 @@ export default class ListCities extends Component {
 			});
 		}
 
-		
 		listCountry = listCountry.map((item)=>{
 			let className = ((this.secondCity==item.city) ? "select" : null);
 			return (
