@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import flags from "../lib/flags";
 
 let defaultFrom = "Туда";
-let defaultTo = "Оттуда";
+let defaultTo = "Обратно";
 
 export default class Route extends Component {
 	constructor(props) {

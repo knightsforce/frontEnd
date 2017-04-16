@@ -13226,7 +13226,7 @@ var _flags2 = _interopRequireDefault(_flags);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var defaultFrom = "Туда";
-var defaultTo = "Оттуда";
+var defaultTo = "Обратно";
 
 var Route = function (_Component) {
 	(0, _inherits3.default)(Route, _Component);
